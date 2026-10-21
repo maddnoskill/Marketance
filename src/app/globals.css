@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+/* Palette Marketance : vert épinette sur fond neutre légèrement vert (voir prototype de phase 1). */
+:root {
+  --bg: #f3f6f5;
+  --surface: #ffffff;
+  --ink: #14211d;
+  --muted: #55665f;
+  --line: #d3dcd8;
+  --accent: #0d6655;
+  --accent-ink: #ffffff;
+  --accent-soft: #d6ece6;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1614;
+    --surface: #17211e;
+    --ink: #e6efec;
+    --muted: #9db0a9;
+    --line: #2d3c37;
+    --accent: #5cc4ad;
+    --accent-ink: #062a22;
+    --accent-soft: #173b33;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-body), system-ui, sans-serif;
+  --font-display: var(--font-display), system-ui, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
