@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyberservice Québec — Aide informatique pour aînés</title>
+<meta name="description" content="Aide patiente pour téléphones, tablettes et ordinateurs, à domicile à Québec et Lévis, ou à distance. Paiement après la séance.">
+<meta name="theme-color" content="#4338ca">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14142b; --soft:#4b4b6b; --bg:#f7f6ff; --card:#ffffff; --line:#e6e3f7;
+    --indigo:#4338ca; --violet:#7c3aed; --pink:#ec4899; --orange:#f97316; --teal:#0d9488; --sky:#0284c7;
+    --grad:linear-gradient(120deg,#4338ca 0%,#7c3aed 45%,#ec4899 80%,#f97316 100%);
+  }
+  *{box-sizing:border-box}
+  html{font-size:19px;scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+  /* En-tête */
+  header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:14px;padding-bottom:14px}
+  .logo{font-weight:800;font-size:1.2rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
+  .logo i{width:36px;height:36px;border-radius:10px;background:var(--grad);display:grid;place-items:center;color:#fff;font-style:normal;font-size:1.05rem}
+  .logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  .btn{display:inline-block;background:var(--ink);color:#fff;text-decoration:none;font-weight:700;padding:15px 28px;border-radius:999px;border:0;font:inherit;font-weight:700;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(67,56,202,.3)}
+  .btn.light{background:#fff;color:var(--indigo)}
+  .btn.outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.7)}
+  .btn.grad{background:var(--grad)}
+
+  /* Bannière */
+  .hero{background:var(--grad);color:#fff;position:relative;overflow:hidden}
+  .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(10px);opacity:.35}
+  .hero::before{width:420px;height:420px;background:#fde047;top:-140px;right:-120px}
+  .hero::after{width:320px;height:320px;background:#22d3ee;bottom:-160px;left:-100px}
+  .hero .wrap{position:relative;padding-top:76px;padding-bottom:84px}
+  .pill{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:6px 14px;border-radius:999px;font-weight:600;font-size:.9rem;margin-bottom:18px}
+  .hero h1{font-size:2.6rem;line-height:1.15;margin:0 0 18px;max-width:760px;letter-spacing:-.02em}
+  .hero p{font-size:1.15rem;max-width:620px;margin:0 0 30px;opacity:.95}
+  .actions{display:flex;gap:14px;flex-wrap:wrap}
+  .trust{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+  .trust div{background:rgba(255,255,255,.16);border-radius:12px;padding:10px 16px;font-weight:600}
+
+  section{padding:64px 0}
+  h2{font-size:1.9rem;margin:0 0 8px;letter-spacing:-.02em}
+  .sub{color:var(--soft);margin:0 0 30px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+
+  /* Services */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;transition:transform .2s ease, box-shadow .2s ease}
+  .card:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(20,20,43,.08)}
+  .icon{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-size:1.6rem;margin-bottom:14px}
+  .c1 .icon{background:#e0e7ff}.c2 .icon{background:#fce7f3}.c3 .icon{background:#ccfbf1}.c4 .icon{background:#ffedd5}
+  .card h3{margin:0 0 6px;font-size:1.15rem}
+  .card p{margin:0;color:var(--soft)}
+
+  /* Tarifs */
+  .prices{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .price-card{border-radius:22px;padding:28px;color:#fff;position:relative;overflow:hidden}
+  .p1{background:linear-gradient(135deg,#4338ca,#7c3aed)}
+  .p2{background:linear-gradient(135deg,#0284c7,#0d9488)}
+  .p3{background:linear-gradient(135deg,#ec4899,#f97316)}
+  .price-card h3{margin:0;font-size:1.1rem;opacity:.95}
+  .price{font-size:2.6rem;font-weight:800;margin:8px 0 4px;letter-spacing:-.02em}
+  .price small{font-size:1rem;font-weight:600;opacity:.9}
+  .price-card p{margin:0;opacity:.95}
+  .badge{position:absolute;top:16px;right:16px;background:#fff;color:#ec4899;font-weight:800;font-size:.75rem;padding:4px 10px;border-radius:999px}
+  .note{color:var(--soft);font-size:.95rem;margin-top:18px}
+
+  /* Étapes */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+  .step{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px}
+  .num{width:44px;height:44px;border-radius:50%;background:var(--grad);color:#fff;font-weight:800;display:grid;place-items:center;margin-bottom:12px}
+  .step p{margin:0;color:var(--soft)}
+
+  /* Formulaire */
+  .book{background:linear-gradient(180deg,var(--bg),#ede9fe)}
+  .book-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:28px;align-items:start}
+  .book-grid > *{min-width:0}
+  input,select,textarea{width:100%;min-width:0}
+  .book-side{background:var(--ink);color:#fff;border-radius:22px;padding:30px}
+  .book-side h3{margin:0 0 12px;font-size:1.3rem}
+  .book-side ul{padding-left:20px;margin:0}
+  .book-side li{margin:6px 0}
+  form{background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;display:grid;gap:16px;box-shadow:0 20px 40px rgba(67,56,202,.08)}
+  label{font-weight:700;display:grid;gap:6px}
+  input,select,textarea{font:inherit;padding:13px 15px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:3px solid #c4b5fd;border-color:var(--violet)}
+  .small{font-size:.9rem;color:var(--soft);margin:0}
+
+  .head-right{display:flex;align-items:center;gap:14px}
+  .tel{font-weight:800;color:var(--indigo);text-decoration:none;white-space:nowrap}
+  .hero-photo{display:block;margin-top:36px;width:100%;max-width:520px;border-radius:24px;box-shadow:0 24px 50px rgba(0,0,0,.25);border:4px solid rgba(255,255,255,.6)}
+  .hero-photo[hidden]{display:none}
+
+  /* Thèmes de couleurs (choisis dans l'éditeur) */
+  body.t-ocean{--indigo:#0369a1;--violet:#0891b2;--grad:linear-gradient(120deg,#1e3a8a 0%,#0369a1 40%,#0891b2 75%,#14b8a6 100%)}
+  body.t-soleil{--indigo:#c2410c;--violet:#db2777;--grad:linear-gradient(120deg,#9d174d 0%,#db2777 35%,#f97316 75%,#facc15 100%)}
+  body.t-foret{--indigo:#166534;--violet:#15803d;--grad:linear-gradient(120deg,#14532d 0%,#15803d 45%,#65a30d 80%,#ca8a04 100%)}
+
+  footer{background:var(--ink);color:#c7c7e0;padding:32px 0;text-align:center;font-size:.9rem}
+
+  @media (max-width:760px){
+    html{font-size:18px}
+    .hero h1{font-size:1.9rem}
+    .book-grid{grid-template-columns:1fr}
+    header .btn{padding:11px 18px}
+    .logo{font-size:1.05rem;min-width:0}
+    .tel{font-size:1.4rem}
+    .tel-num{display:none}
+    .head-right{gap:8px;flex-shrink:0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="#"><i>✦</i><span data-c="nom">Cyberservice Québec</span></a>
+    <div class="head-right"><a class="tel" data-tel hidden></a><a class="btn grad" href="#reserver">Réserver</a></div>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <div class="pill" data-c="zone">📍 Québec et Lévis · à domicile ou à distance</div>
+      <h1 data-c="titre">Votre téléphone ou votre ordinateur vous complique la vie ? On règle ça, avec patience.</h1>
+      <p data-c="sous_titre">Aide informatique simple et sans jargon pour les aînés et leurs familles. Vous payez seulement après la séance, si vous êtes satisfait.</p>
+      <div class="actions">
+        <a class="btn light" href="#reserver">Réserver une séance</a>
+        <a class="btn outline" href="#tarifs">Voir les tarifs</a>
+      </div>
+      <div class="trust">
+        <div>✅ Paiement après la séance</div>
+        <div>🤝 Aucune vente forcée</div>
+        <div>🐢 On explique lentement</div>
+      </div>
+      <img class="hero-photo" data-photo alt="" hidden>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <h2>Je peux vous aider avec…</h2>
+      <p class="sub">Les petits et les gros tracas du quotidien.</p>
+      <div class="grid">
+        <div class="card c1"><div class="icon">📱</div><h3 data-c="service1_titre">Téléphone et tablette</h3><p data-c="service1_texte">Configuration, photos, applications, textos, appels vidéo avec la famille.</p></div>
+        <div class="card c2"><div class="icon">💻</div><h3 data-c="service2_titre">Ordinateur lent ou bloqué</h3><p data-c="service2_texte">Nettoyage, mises à jour, imprimante, Wi-Fi, sauvegarde de vos fichiers.</p></div>
+        <div class="card c3"><div class="icon">🛡️</div><h3 data-c="service3_titre">Arnaques et sécurité</h3><p data-c="service3_texte">Reconnaître les faux courriels et appels, mots de passe sûrs, virus.</p></div>
+        <div class="card c4"><div class="icon">🎓</div><h3 data-c="service4_titre">Cours privé</h3><p data-c="service4_texte">Apprendre à votre rythme : courriel, Facebook, Zoom, services en ligne.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tarifs" class="prices">
+    <div class="wrap">
+      <h2>Tarifs clairs, sans surprise</h2>
+      <p class="sub">Le prix est annoncé avant la séance. Point.</p>
+      <div class="grid">
+        <div class="price-card p1"><h3>À domicile</h3><div class="price"><span data-c="prix_domicile">50 $</span> <small>/ heure</small></div><p>Québec et Lévis. Déplacement inclus.</p></div>
+        <div class="price-card p2"><h3>À distance</h3><div class="price"><span data-c="prix_distance">35 $</span> <small>/ heure</small></div><p>Par téléphone ou partage d'écran.</p></div>
+        <div class="price-card p3"><span class="badge">POPULAIRE</span><h3>Nouveau téléphone prêt à utiliser</h3><div class="price"><span data-c="prix_forfait">60 $</span> <small>forfait</small></div><p>Contacts et photos transférés, réglages, petite formation.</p></div>
+      </div>
+      <p class="note" data-c="note_paiement">💳 Paiement par virement Interac ou comptant, après la séance.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Comment ça marche</h2>
+      <p class="sub">Simple comme un coup de fil.</p>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><h3>Vous réservez</h3><p>Avec le formulaire ci-dessous, en 2 minutes.</p></div>
+        <div class="step"><div class="num">2</div><h3>Je vous rappelle</h3><p>Pour fixer la date et comprendre le problème.</p></div>
+        <div class="step"><div class="num">3</div><h3>On règle tout</h3><p>Et je vous montre comment faire la prochaine fois.</p></div>
+        <div class="step"><div class="num">4</div><h3>Vous payez après</h3><p>Seulement si vous êtes satisfait.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reserver" class="book">
+    <div class="wrap">
+      <h2>Réserver une séance</h2>
+      <p class="sub">Je vous rappelle dans les 24 heures.</p>
+      <div class="book-grid">
+        <div class="book-side">
+          <h3>Pourquoi me choisir ?</h3>
+          <ul>
+            <li>Un humain patient, pas un centre d'appels</li>
+            <li>Des explications claires, sans jargon</li>
+            <li>Vous payez seulement après la séance</li>
+            <li>Service local à Québec et Lévis</li>
+          </ul>
+        </div>
+        <form action="https://formsubmit.co/theauthentiqueone@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Nouvelle réservation — Cyberservice Québec">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="/merci.html" data-next>
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+          <label>Votre nom<input name="nom" required autocomplete="name"></label>
+          <label>Téléphone<input name="telephone" type="tel" required autocomplete="tel"></label>
+          <label>Ville
+            <select name="ville"><option>Québec</option><option>Lévis</option><option>Autre (à distance)</option></select>
+          </label>
+          <label>Type de séance
+            <select name="seance"><option>À domicile</option><option>À distance</option><option>Forfait nouveau téléphone</option></select>
+          </label>
+          <label>Décrivez le problème en quelques mots<textarea name="probleme" rows="4" required></textarea></label>
+          <button class="btn grad" type="submit">Envoyer ma demande</button>
+          <p class="small">Vos informations servent uniquement à vous rappeler.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 <span data-c="nom">Cyberservice Québec</span> · Québec et Lévis</div>
+</footer>
+
+<script>
+/* Charge le texte modifiable depuis content.json (édité avec Pages CMS).
+   Si le fichier ne charge pas, le texte par défaut ci-dessus reste affiché. */
+(function(){
+  var next = document.querySelector('[data-next]');
+  if (next) next.value = location.origin + '/merci.html';
+  fetch('/content.json', {cache:'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(c){
+    if (!c) return;
+    document.querySelectorAll('[data-c]').forEach(function(el){
+      var v = c[el.getAttribute('data-c')];
+      if (typeof v === 'string' && v.trim()) el.textContent = v;
+    });
+    if (c.nom) document.title = c.nom + ' — Aide informatique pour aînés';
+    var themes = {'Océan':'t-ocean','Coucher de soleil':'t-soleil','Forêt':'t-foret'};
+    if (themes[c.theme]) document.body.classList.add(themes[c.theme]);
+    var img = document.querySelector('[data-photo]');
+    if (c.photo && img){ img.src = c.photo; img.hidden = false; }
+    var tel = document.querySelector('[data-tel]');
+    if (c.telephone && tel){ tel.innerHTML = '📞 <span class="tel-num"></span>'; tel.querySelector('.tel-num').textContent = c.telephone; tel.href = 'tel:' + c.telephone.replace(/[^0-9+]/g,''); tel.hidden = false; }
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>

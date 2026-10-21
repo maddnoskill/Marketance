@@ -1,0 +1,68 @@
+media:
+  input: images
+  output: /images
+content:
+  - name: site
+    label: ✏️ Mon site
+    type: file
+    path: content.json
+    fields:
+      - name: nom
+        label: Nom de l'entreprise
+        type: string
+      - name: theme
+        label: Couleurs du site
+        type: select
+        options:
+          values: [Arc-en-ciel, Océan, Coucher de soleil, Forêt]
+      - name: photo
+        label: Photo principale (optionnelle)
+        type: image
+      - name: telephone
+        label: Mon numéro de téléphone (optionnel, affiché en haut)
+        type: string
+      - name: zone
+        label: Zone desservie
+        type: string
+      - name: titre
+        label: Grand titre
+        type: text
+      - name: sous_titre
+        label: Phrase sous le titre
+        type: text
+      - name: service1_titre
+        label: Service 1 — titre
+        type: string
+      - name: service1_texte
+        label: Service 1 — description
+        type: text
+      - name: service2_titre
+        label: Service 2 — titre
+        type: string
+      - name: service2_texte
+        label: Service 2 — description
+        type: text
+      - name: service3_titre
+        label: Service 3 — titre
+        type: string
+      - name: service3_texte
+        label: Service 3 — description
+        type: text
+      - name: service4_titre
+        label: Service 4 — titre
+        type: string
+      - name: service4_texte
+        label: Service 4 — description
+        type: text
+      - name: prix_domicile
+        label: Prix à domicile (par heure)
+        type: string
+      - name: prix_distance
+        label: Prix à distance (par heure)
+        type: string
+      - name: prix_forfait
+        label: Prix forfait nouveau téléphone
+        type: string
+      - name: note_paiement
+        label: Note sur le paiement
+        type: string
