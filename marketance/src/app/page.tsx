@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const modules = [
   {
     title: "Mes finances",
@@ -24,8 +26,12 @@ export default function HomePage() {
         <h1 className="font-display text-4xl font-extrabold text-balance sm:text-5xl">Marketance</h1>
         <p className="max-w-prose text-lg text-muted">
           Vos services, vos finances et votre organisation au même endroit. L&apos;application est en cours de
-          construction : aucun compte ne peut encore être créé.
+          construction. Vous pouvez déjà créer un compte.
         </p>
+        <div className="flex flex-wrap gap-3">
+          <Link href="/inscription" className="rounded-lg bg-accent px-4 py-2 font-bold text-accent-ink">Créer un compte</Link>
+          <Link href="/connexion" className="rounded-lg border border-line px-4 py-2 font-bold">Se connecter</Link>
+        </div>
       </header>
       <ul className="grid gap-4 sm:grid-cols-3">
         {modules.map((m) => (

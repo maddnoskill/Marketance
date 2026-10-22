@@ -1,5 +1,12 @@
 # Journal des changements
 
+## 0.2.0 — 22 octobre 2026
+
+- Base de données Supabase (région Canada) : tables `profiles` et `user_roles`, RLS, création automatique du profil à l'inscription.
+- Inscription avec consentement, connexion, déconnexion, mot de passe oublié, page Mon compte.
+- Politique de confidentialité préliminaire.
+- Test SQL des règles d'accès ; 59 tests unitaires.
+
 ## 0.1.0 — 20 octobre 2026
 
 - Plan de phase 0 et prototype cliquable de phase 1.

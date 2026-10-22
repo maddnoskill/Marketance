@@ -8,9 +8,11 @@ Ordre choisi le 20 octobre 2026 : **finances avant marketplace**.
   - [x] Next.js 16 + TypeScript strict + Tailwind + ESLint
   - [x] Moteur de calcul financier + tests
   - [x] Pages d'accueil, 404 et erreur en français
-  - [ ] Dépôt GitHub
-  - [ ] Projet Supabase (région Canada) + connexion par courriel
-  - [ ] Première migration (`profiles`, `user_roles`) + tests RLS
+  - [x] Dépôt GitHub
+  - [x] Projet Supabase gratuit `marketance` (région Canada)
+  - [x] Première migration (`profiles`, `user_roles`) + tests RLS
+  - [x] Inscription, connexion, déconnexion, mot de passe oublié, page Mon compte
+  - [ ] Tester le parcours complet avec un vrai courriel (en local ou sur Vercel)
   - [ ] Premier déploiement Vercel (gratuit)
 - [ ] Phase 3 : MVP financier (comptes, opérations, budgets, patrimoine net, export CSV)
 - [ ] Phase 4 : organisation (tâches, calendrier, notes)
