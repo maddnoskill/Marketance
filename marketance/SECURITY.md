@@ -8,7 +8,10 @@
 
 - Aucun secret dans le code ni dans Git. Les clés vont dans `.env.local` (ignoré par Git) et dans les variables d'environnement de l'hébergeur. `.env.example` liste les noms sans valeurs.
 - Les clés « service role » de Supabase et les clés secrètes Stripe ne sont **jamais** utilisées dans du code exécuté par le navigateur (pas de préfixe `NEXT_PUBLIC_`).
-- Chaque table de données personnelles aura une politique RLS testée en lecture, insertion, modification et suppression.
+- Chaque table de données personnelles a une politique RLS testée en lecture, insertion, modification et suppression (`supabase/tests/`).
+- Les rôles ne se modifient jamais depuis le navigateur : seul le serveur, avec la clé secrète, peut en ajouter.
+- Les messages de connexion et de mot de passe oublié ne révèlent jamais si une adresse courriel a un compte.
+- Les redirections après connexion n'acceptent que des chemins internes (pas de redirection vers un autre site).
 - Toute saisie est validée côté serveur (Zod), même si le formulaire la valide déjà.
 - Aucun numéro de carte ni code de sécurité n'est stocké : Stripe s'en charge.
 - Les journaux ne contiennent ni secret ni donnée financière personnelle.

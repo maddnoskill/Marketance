@@ -2,7 +2,7 @@
 
 Application web en français pour le Québec : finances personnelles, organisation personnelle et, plus tard, marketplace de services.
 
-> État : **phase 2 en cours** (socle technique). Aucun compte, aucune base de données ni paiement ne sont encore branchés.
+> État : **phase 2 en cours** (socle technique). Comptes et base de données Supabase branchés ; aucun paiement.
 
 ## Démarrer sur ton ordinateur
 
@@ -12,6 +12,7 @@ Prérequis : [Node.js 22](https://nodejs.org) (version LTS) et Git.
 git clone https://github.com/maddnoskill/Marketance.git
 cd Marketance/marketance   # l'app vit dans ce sous-dossier ; la racine du dépôt est le site Cyberservice Québec
 npx npm@11 install        # npm 11 : npm 10 (fourni avec Node 22) plante sur ce projet
+cp .env.example .env.local   # puis remplis les valeurs Supabase (voir le fichier)
 npm run dev               # puis ouvre http://localhost:3000
 ```
 
@@ -33,6 +34,9 @@ npm run dev               # puis ouvre http://localhost:3000
 - `src/lib/dates/` : dates et fuseau America/Toronto.
 - `src/lib/finance-engine/` : tous les calculs financiers (voir [docs/calculs-financiers.md](docs/calculs-financiers.md)).
 - `src/lib/validation/` : règles de validation (Zod), réutilisées côté serveur.
+- `src/lib/supabase/` : connexion à Supabase (côté serveur uniquement).
+- `supabase/migrations/` : structure de la base de données, en SQL.
+- `supabase/tests/` : tests des règles d'accès (RLS).
 - `tests/unit/` : tests automatisés.
 - `prototype/index.html` : maquette cliquable de la phase 1 (s'ouvre d'un double-clic).
 - `docs/` : plan, architecture, calculs.
