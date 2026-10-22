@@ -1,0 +1,21 @@
+{
+  "nom": "Cyberservice Québec",
+  "theme": "Arc-en-ciel",
+  "photo": "",
+  "zone": "📍 Québec et Lévis · à domicile ou à distance",
+  "titre": "Votre téléphone ou votre ordinateur vous complique la vie ? On règle ça, avec patience.",
+  "sous_titre": "Aide informatique simple et sans jargon pour les aînés et leurs familles. Vous payez seulement après la séance, si vous êtes satisfait.",
+  "service1_titre": "Téléphone et tablette",
+  "service1_texte": "Configuration, photos, applications, textos, appels vidéo avec la famille.",
+  "service2_titre": "Ordinateur lent ou bloqué",
+  "service2_texte": "Nettoyage, mises à jour, imprimante, Wi-Fi, sauvegarde de vos fichiers.",
+  "service3_titre": "Arnaques et sécurité",
+  "service3_texte": "Reconnaître les faux courriels et appels, mots de passe sûrs, virus.",
+  "service4_titre": "Cours privé",
+  "service4_texte": "Apprendre à votre rythme : courriel, Facebook, Zoom, services en ligne.",
+  "prix_domicile": "50 $",
+  "prix_distance": "35 $",
+  "prix_forfait": "60 $",
+  "note_paiement": "💳 Paiement par virement Interac ou comptant, après la séance.",
+  "telephone": ""
+}

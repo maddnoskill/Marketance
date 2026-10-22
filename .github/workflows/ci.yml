@@ -1,9 +1,15 @@
-name: Vérifications
+name: Vérifications Marketance
 
 on:
   pull_request:
+    paths: ["marketance/**", ".github/workflows/ci.yml"]
   push:
     branches: [main]
+    paths: ["marketance/**", ".github/workflows/ci.yml"]
+
+defaults:
+  run:
+    working-directory: marketance
 
 jobs:
   check:
@@ -14,6 +20,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: marketance/package-lock.json
       - name: Installer les dépendances
         run: npx -y npm@11.6.2 ci
       - name: Types

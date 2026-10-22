@@ -1,0 +1,3 @@
+# Fichier propre au futur projet Vercel de Marketance (Root Directory = marketance).
+# Sa présence empêche Vercel d'appliquer ici le .vercelignore de la racine, qui exclut tout ce dossier.
+prototype/captures

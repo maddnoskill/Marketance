@@ -4,6 +4,7 @@
 
 - Plan de phase 0 et prototype cliquable de phase 1.
 - Nom de l'application : Marketance.
+- L'application vit dans le dossier `marketance/` ; la racine du dépôt reste le site Cyberservice Québec.
 - Squelette Next.js 16, TypeScript strict, Tailwind 4, ESLint, Vitest.
 - Moteur de calcul financier : totaux mensuels, soldes, patrimoine net, budgets, projection, doublons.
 - Validation des opérations avec Zod.
