@@ -27,3 +27,7 @@ Site vitrine d'un service d'aide informatique pour aînés (Québec et Lévis).
 - Le formulaire passe par FormSubmit et envoie chaque réservation par courriel.
   La toute première soumission déclenche un courriel d'activation à confirmer.
 - Hébergement : Vercel, branché sur ce dépôt (chaque commit sur `main` = mise en ligne).
+
+## Application Marketance
+
+Le dossier [`marketance/`](marketance/) contient une autre application, indépendante de ce site : Marketance (finances personnelles, organisation et marketplace, en Next.js). Elle n'est pas mise en ligne par le projet Vercel de ce site, et ne change rien à son fonctionnement. Voir [marketance/README.md](marketance/README.md).

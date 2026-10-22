@@ -1,0 +1,33 @@
+name: Vérifications Marketance
+
+on:
+  pull_request:
+    paths: ["marketance/**", ".github/workflows/ci.yml"]
+  push:
+    branches: [main]
+    paths: ["marketance/**", ".github/workflows/ci.yml"]
+
+defaults:
+  run:
+    working-directory: marketance
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: marketance/package-lock.json
+      - name: Installer les dépendances
+        run: npx -y npm@11.6.2 ci
+      - name: Types
+        run: npm run typecheck
+      - name: Qualité du code
+        run: npm run lint
+      - name: Tests unitaires
+        run: npm test
+      - name: Build de production
+        run: npm run build

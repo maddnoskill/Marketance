@@ -1,0 +1,793 @@
+<meta charset="utf-8">
+<title>Prototype Marketance</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
+<style>
+/* Mise en page : bandeau prototype, en-tête collant, une vue à la fois, grilles qui passent à une colonne sur téléphone. */
+:root {
+  --bg: #f3f6f5;
+  --surface: #ffffff;
+  --surface-2: #e8eeec;
+  --ink: #14211d;
+  --muted: #55665f;
+  --line: #d3dcd8;
+  --accent: #0d6655;
+  --accent-ink: #ffffff;
+  --accent-soft: #d6ece6;
+  --proto: #fff2c7;
+  --proto-ink: #5c4300;
+  --good: #1d7a3b;
+  --warn: #9a5800;
+  --bad: #b3261e;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1614; --surface: #17211e; --surface-2: #1f2b27; --ink: #e6efec; --muted: #9db0a9;
+    --line: #2d3c37; --accent: #5cc4ad; --accent-ink: #062a22; --accent-soft: #173b33;
+    --proto: #3b3214; --proto-ink: #f5dc8f; --good: #6fd38f; --warn: #f0b35a; --bad: #ff8a80;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1614; --surface: #17211e; --surface-2: #1f2b27; --ink: #e6efec; --muted: #9db0a9;
+  --line: #2d3c37; --accent: #5cc4ad; --accent-ink: #062a22; --accent-soft: #173b33;
+  --proto: #3b3214; --proto-ink: #f5dc8f; --good: #6fd38f; --warn: #f0b35a; --bad: #ff8a80;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.7rem, 4vw, 2.5rem); font-weight: 800; }
+h2 { font-size: 1.35rem; font-weight: 600; }
+h3 { font-size: 1.05rem; font-weight: 600; }
+p { margin: 0; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.num { font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+.small { font-size: .875rem; }
+
+.proto-banner { background: var(--proto); color: var(--proto-ink); font-size: .875rem; }
+.proto-banner .wrap { padding-block: 8px; }
+
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--surface); }
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border-bottom: 1px solid var(--line); }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-block: 10px; }
+.brand { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-weight: 800; font-size: 1.3rem; color: var(--ink); text-decoration: none; }
+.brand svg { width: 28px; height: 28px; }
+nav.tabs { display: flex; gap: 4px; flex-wrap: wrap; }
+nav.tabs a { padding: 8px 12px; border-radius: 999px; color: var(--muted); text-decoration: none; font-weight: 700; }
+nav.tabs a[aria-current="page"] { background: var(--accent-soft); color: var(--ink); }
+nav.tabs a:hover { color: var(--ink); }
+
+main { padding-block: 28px 64px; }
+.view { display: grid; gap: 24px; }
+.view-head { display: grid; gap: 6px; }
+
+.btn { font: inherit; font-weight: 700; border: 1px solid transparent; border-radius: var(--radius); padding: 10px 16px; cursor: pointer; background: var(--accent); color: var(--accent-ink); }
+.btn.secondary { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+label { font-weight: 700; font-size: .875rem; display: grid; gap: 4px; }
+input, select { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 9px 10px; width: 100%; min-width: 0; }
+.field-error { color: var(--bad); font-size: .85rem; font-weight: 400; min-height: 1.2em; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; min-width: 0; }
+.chip { display: inline-block; font-size: .78rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); letter-spacing: .02em; white-space: nowrap; }
+.chip.good { color: var(--good); }
+.chip.warn { color: var(--warn); }
+.chip.bad { color: var(--bad); }
+.chip.accent { background: var(--accent-soft); color: var(--ink); }
+
+/* Marketplace */
+.filters { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; align-items: end; }
+.results-meta { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.offers { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+.offer { display: grid; gap: 10px; text-align: left; font: inherit; color: inherit; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; cursor: pointer; }
+.offer:hover { border-color: var(--accent); }
+.offer .price { font-weight: 700; }
+.offer-top { display: flex; justify-content: space-between; gap: 8px; align-items: start; }
+.empty { text-align: center; padding: 32px; }
+.detail { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; align-items: start; }
+.detail dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0; }
+.detail dt { color: var(--muted); }
+.detail dd { margin: 0; }
+.notice { border-left: 4px solid var(--warn); background: var(--surface-2); padding: 10px 12px; border-radius: 6px; }
+
+/* Finances */
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.kpi { display: grid; gap: 2px; }
+.kpi .value { font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; }
+.kpi .delta { font-size: .85rem; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.bars { display: grid; gap: 14px; }
+.bar-row { display: grid; gap: 4px; }
+.bar-label { display: flex; justify-content: space-between; gap: 8px; font-size: .92rem; }
+.bar { height: 10px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+.bar > span { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+.bar.warn > span { background: var(--warn); }
+.bar.over > span { background: var(--bad); }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+td.amount { text-align: right; }
+.in { color: var(--good); }
+.cancelled td { color: var(--muted); text-decoration: line-through; }
+.form-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.form-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.status-msg { font-weight: 700; }
+.status-msg.ok { color: var(--good); }
+.status-msg.err { color: var(--bad); }
+.list { list-style: none; margin: 0; padding: 0; display: grid; }
+.list li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.list li:last-child { border-bottom: 0; }
+.total-line { display: flex; justify-content: space-between; font-weight: 700; padding-top: 8px; }
+
+/* Organisation */
+.task-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: end; }
+.task-form .full { grid-column: 1 / -1; }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg button { font: inherit; font-size: .9rem; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.task { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.task input[type="checkbox"] { width: 20px; height: 20px; flex: none; accent-color: var(--accent); }
+.task .t-body { flex: 1; min-width: 0; display: grid; }
+.task.done .t-title { text-decoration: line-through; color: var(--muted); }
+.task .del { font: inherit; background: none; border: 0; color: var(--muted); cursor: pointer; padding: 4px 8px; }
+.task .del:hover { color: var(--bad); }
+.agenda li { align-items: baseline; }
+.agenda time { font-weight: 700; min-width: 7.5em; }
+
+footer { border-top: 1px solid var(--line); }
+footer .wrap { padding-block: 20px; }
+
+@media (max-width: 820px) {
+  .filters, .detail, .two, .task-form { grid-template-columns: 1fr; }
+  .kpis { grid-template-columns: 1fr 1fr; }
+  .form-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .kpis, .form-grid { grid-template-columns: 1fr; }
+  .kpi .value { font-size: 1.4rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .bar > span { transition: width .4s ease; }
+}
+</style>
+
+<div class="proto-banner" role="note">
+  <div class="wrap"><strong>Prototype de démonstration.</strong> Toutes les offres, personnes et sommes sont fictives. Rien n'est enregistré : tout revient à zéro au rechargement. Aucun compte ni paiement n'existe encore.</div>
+</div>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#marketplace" aria-label="Marketance, accueil">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M16 6 L19.5 16 L16 26 L12.5 16 Z" fill="var(--accent)"/><circle cx="16" cy="16" r="2" fill="var(--surface)"/></svg>
+      Marketance
+    </a>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#marketplace" data-view="marketplace">Marketplace</a>
+      <a href="#finances" data-view="finances">Mes finances</a>
+      <a href="#organisation" data-view="organisation">Organisation</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- MODULE A : MARKETPLACE -->
+  <section class="view" id="view-marketplace" aria-labelledby="h-market">
+    <div class="view-head">
+      <h1 id="h-market">Des services et des outils numériques, offerts par des gens d'ici</h1>
+      <p class="muted">Cherchez par mot-clé, catégorie ou type d'offre. Prix en dollars canadiens, taxes en sus.</p>
+    </div>
+
+    <form class="filters panel" id="filters" role="search" onsubmit="return false">
+      <label for="q">Rechercher
+        <input id="q" type="search" placeholder="Ex. : site web, tonte, montage" autocomplete="off">
+      </label>
+      <label for="cat">Catégorie
+        <select id="cat"></select>
+      </label>
+      <label for="type">Type d'offre
+        <select id="type">
+          <option value="">Tous</option>
+          <option value="service">Service</option>
+          <option value="app">Application numérique</option>
+        </select>
+      </label>
+    </form>
+
+    <div id="catalogue" class="view" style="gap:12px">
+      <div class="results-meta">
+        <p id="count" class="muted" aria-live="polite"></p>
+        <button type="button" class="btn secondary" id="reset">Effacer les filtres</button>
+      </div>
+      <div class="offers" id="offers"></div>
+    </div>
+
+    <div id="offer-detail" hidden></div>
+  </section>
+
+  <!-- MODULE B : FINANCES -->
+  <section class="view" id="view-finances" aria-labelledby="h-fin" hidden>
+    <div class="view-head">
+      <h1 id="h-fin">Mes finances · <span id="fin-month"></span></h1>
+      <p class="muted">Chaque chiffre est calculé à partir des opérations ci-dessous, en cents, sans arrondi. Les transferts entre vos comptes ne comptent ni comme revenu ni comme dépense.</p>
+    </div>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="two">
+      <div class="panel" style="display:grid;gap:14px">
+        <h2>Budgets du mois</h2>
+        <div class="bars" id="budgets"></div>
+      </div>
+      <div class="panel" style="display:grid;gap:14px">
+        <h2>Patrimoine net</h2>
+        <div id="networth"></div>
+        <p class="small muted">Les valeurs des biens sont des estimations personnelles datées, pas des évaluations officielles.</p>
+      </div>
+    </div>
+
+    <div class="panel" style="display:grid;gap:14px">
+      <h2>Ajouter une opération</h2>
+      <form id="tx-form" novalidate>
+        <div class="form-grid">
+          <label for="tx-kind">Type
+            <select id="tx-kind">
+              <option value="expense">Dépense</option>
+              <option value="income">Revenu</option>
+              <option value="transfer">Transfert entre mes comptes</option>
+            </select>
+          </label>
+          <label for="tx-amount">Montant ($)
+            <input id="tx-amount" inputmode="decimal" placeholder="Ex. : 42,50" aria-describedby="err-amount">
+            <span class="field-error" id="err-amount"></span>
+          </label>
+          <label for="tx-date">Date
+            <input id="tx-date" type="date" aria-describedby="err-date">
+            <span class="field-error" id="err-date"></span>
+          </label>
+          <label for="tx-label">Description
+            <input id="tx-label" maxlength="60" placeholder="Ex. : Épicerie Metro" aria-describedby="err-label">
+            <span class="field-error" id="err-label"></span>
+          </label>
+          <label for="tx-account">Compte
+            <select id="tx-account"></select>
+          </label>
+          <label for="tx-category" id="wrap-category">Catégorie
+            <select id="tx-category"></select>
+          </label>
+          <label for="tx-to" id="wrap-to" hidden>Vers le compte
+            <select id="tx-to" aria-describedby="err-to"></select>
+            <span class="field-error" id="err-to"></span>
+          </label>
+          <label for="tx-status">Statut
+            <select id="tx-status">
+              <option value="completed">Réalisé</option>
+              <option value="planned">Prévu</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-actions" style="margin-top:12px">
+          <button class="btn" type="submit">Ajouter l'opération</button>
+          <span class="status-msg" id="tx-msg" role="status"></span>
+        </div>
+      </form>
+    </div>
+
+    <div class="panel" style="display:grid;gap:14px">
+      <h2>Opérations du mois</h2>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Date</th><th>Description</th><th>Catégorie</th><th>Compte</th><th>Statut</th><th style="text-align:right">Montant</th></tr></thead>
+          <tbody id="tx-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="panel" style="display:grid;gap:14px">
+      <h2>Comptes suivis</h2>
+      <ul class="list" id="accounts"></ul>
+      <p class="small muted">Solde calculé = solde de départ + opérations réalisées. Il peut différer du solde réel affiché par votre banque.</p>
+    </div>
+  </section>
+
+  <!-- MODULE C : ORGANISATION -->
+  <section class="view" id="view-organisation" aria-labelledby="h-org" hidden>
+    <div class="view-head">
+      <h1 id="h-org">Organisation</h1>
+      <p class="muted">Vos tâches et vos prochains rendez-vous. Aucun rappel n'est envoyé dans ce prototype.</p>
+    </div>
+
+    <div class="two">
+      <div class="panel" style="display:grid;gap:14px">
+        <h2>Tâches</h2>
+        <form class="task-form" id="task-form" novalidate>
+          <label for="task-title" class="full">Nouvelle tâche
+            <input id="task-title" maxlength="80" placeholder="Ex. : Envoyer la soumission" aria-describedby="err-task">
+          </label>
+          <label for="task-due">Échéance
+            <input id="task-due" type="date">
+          </label>
+          <label for="task-prio">Priorité
+            <select id="task-prio"><option value="1">Haute</option><option value="2" selected>Moyenne</option><option value="3">Basse</option></select>
+          </label>
+          <button class="btn" type="submit">Ajouter</button>
+        </form>
+        <span class="field-error" id="err-task"></span>
+        <div class="seg" role="group" aria-label="Filtrer les tâches" id="task-filter">
+          <button type="button" data-f="todo" aria-pressed="true">À faire</button>
+          <button type="button" data-f="late" aria-pressed="false">En retard</button>
+          <button type="button" data-f="done" aria-pressed="false">Terminées</button>
+          <button type="button" data-f="all" aria-pressed="false">Toutes</button>
+        </div>
+        <div id="tasks"></div>
+      </div>
+      <div class="panel" style="display:grid;gap:14px">
+        <h2>Agenda des 14 prochains jours</h2>
+        <ul class="list agenda" id="agenda"></ul>
+        <p class="small muted">Vues jour, semaine et mois prévues en phase 4.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap small muted">Marketance · prototype de phase 1 · Fuseau horaire : America/Toronto · Les liens Conditions, Confidentialité et Contact seront ajoutés avec l'application réelle.</div>
+</footer>
+
+<script>
+"use strict";
+// ---------- Outils : argent en cents, dates en America/Toronto ----------
+const TZ = "America/Toronto";
+const moneyFmt = new Intl.NumberFormat("fr-CA", { style: "currency", currency: "CAD" });
+const fmtCents = (c) => moneyFmt.format(c / 100);
+const dateFmt = new Intl.DateTimeFormat("fr-CA", { day: "numeric", month: "short", timeZone: "UTC" });
+const fmtDate = (iso) => dateFmt.format(new Date(iso + "T12:00:00Z"));
+
+/** Date du jour (AAAA-MM-JJ) dans le fuseau America/Toronto. */
+function todayISO() {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+}
+function addDays(iso, n) {
+  const d = new Date(iso + "T12:00:00Z");
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+function monthKey(iso) { return iso.slice(0, 7); }
+function prevMonthKey(key) {
+  const [y, m] = key.split("-").map(Number);
+  return m === 1 ? `${y - 1}-12` : `${y}-${String(m - 1).padStart(2, "0")}`;
+}
+
+/** Convertit « 42,50 » ou « 42.50 » en 4250 cents sans passer par un nombre à virgule. Retourne null si invalide. */
+function parseCents(input) {
+  const s = String(input).trim().replace(/\s/g, "").replace(",", ".");
+  const m = /^(\d{1,9})(?:\.(\d{1,2}))?$/.exec(s);
+  if (!m) return null;
+  const cents = Number(m[1]) * 100 + Number((m[2] || "0").padEnd(2, "0"));
+  return cents > 0 ? cents : null;
+}
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch]));
+}
+
+// ---------- Moteur de calcul financier (logique pure, testable) ----------
+const Finance = {
+  /** Totaux d'un mois. Seules les opérations du statut demandé comptent ; les transferts sont exclus. */
+  monthTotals(txs, key, status = "completed") {
+    let income = 0, expense = 0;
+    for (const t of txs) {
+      if (t.status !== status || monthKey(t.date) !== key) continue;
+      if (t.kind === "income") income += t.amountCents;
+      else if (t.kind === "expense") expense += t.amountCents;
+    }
+    return { income, expense, net: income - expense };
+  },
+  /** Solde calculé d'un compte : départ + entrées réalisées − sorties réalisées (transferts inclus). */
+  accountBalance(account, txs) {
+    let bal = account.openingCents;
+    for (const t of txs) {
+      if (t.status !== "completed") continue;
+      if (t.kind === "income" && t.accountId === account.id) bal += t.amountCents;
+      if (t.kind === "expense" && t.accountId === account.id) bal -= t.amountCents;
+      if (t.kind === "transfer") {
+        if (t.accountId === account.id) bal -= t.amountCents;
+        if (t.toAccountId === account.id) bal += t.amountCents;
+      }
+    }
+    return bal;
+  },
+  spentByCategory(txs, key) {
+    const out = {};
+    for (const t of txs) {
+      if (t.kind !== "expense" || t.status !== "completed" || monthKey(t.date) !== key) continue;
+      out[t.categoryId] = (out[t.categoryId] || 0) + t.amountCents;
+    }
+    return out;
+  },
+  /** Patrimoine net = actifs − passifs. Un compte au solde négatif (carte de crédit) devient un passif. */
+  netWorth(accounts, txs, assets, liabilities) {
+    let assetTotal = 0, liabilityTotal = 0;
+    for (const a of accounts) {
+      const b = Finance.accountBalance(a, txs);
+      if (b >= 0) assetTotal += b; else liabilityTotal += -b;
+    }
+    for (const a of assets) assetTotal += a.valueCents;
+    for (const l of liabilities) liabilityTotal += l.balanceCents;
+    return { assetTotal, liabilityTotal, net: assetTotal - liabilityTotal };
+  },
+};
+window.Finance = Finance; // exposé pour les tests automatisés
+window.parseCents = parseCents;
+
+// ---------- Données fictives (générées pour le mois courant) ----------
+const TODAY = todayISO();
+const CUR = monthKey(TODAY);
+const PREV = prevMonthKey(CUR);
+const d = (key, day) => `${key}-${String(day).padStart(2, "0")}`;
+
+const CATEGORIES_MK = [
+  ["web", "Développement web et informatique"],
+  ["ia", "Automatisation et intelligence artificielle"],
+  ["design", "Design et création graphique"],
+  ["video", "Montage vidéo et multimédia"],
+  ["conseil", "Consultation et accompagnement"],
+  ["formation", "Coaching et formation"],
+  ["entretien", "Jardinage, entretien et services personnels"],
+  ["admin", "Services administratifs"],
+  ["logiciels", "Logiciels et applications en ligne"],
+];
+
+const OFFERS = [
+  { id: 1, type: "service", cat: "web", title: "Site vitrine pour petite entreprise", provider: "Studio Érable (fictif)", city: "Québec", priceCents: 90000, unit: "forfait", desc: "Site de 5 pages, adapté au téléphone, formulaire de contact et mise en ligne. Deux rondes de corrections incluses.", conditions: "Contenu (textes et photos) fourni par le client.", cancel: "Annulation sans frais jusqu'au début des travaux. Ensuite, 30 % du montant est retenu." },
+  { id: 2, type: "service", cat: "ia", title: "Automatiser vos factures avec l'IA", provider: "Nordik Automatisation (fictif)", city: "Montréal", priceCents: 8500, unit: "heure", desc: "Analyse de votre processus de facturation et mise en place d'une automatisation simple avec vos outils actuels.", conditions: "Minimum de 2 heures. À distance.", cancel: "Annulation gratuite 48 h avant le rendez-vous." },
+  { id: 3, type: "service", cat: "design", title: "Logo et identité visuelle", provider: "Atelier Fleuve (fictif)", city: "Trois-Rivières", priceCents: 45000, unit: "forfait", desc: "Trois propositions de logo, palette de couleurs et guide d'utilisation d'une page.", conditions: "Droits d'utilisation cédés après paiement complet.", cancel: "Remboursement de 50 % si annulé avant la première proposition." },
+  { id: 4, type: "service", cat: "video", title: "Montage de capsules pour réseaux sociaux", provider: "Monteuse Laurentides (fictif)", city: "Saint-Jérôme", priceCents: 6000, unit: "capsule", desc: "Montage vertical de 30 à 60 secondes, sous-titres en français, musique libre de droits.", conditions: "Vous fournissez les séquences brutes.", cancel: "Aucun frais avant la réception des séquences." },
+  { id: 5, type: "service", cat: "entretien", title: "Tonte de pelouse hebdomadaire", provider: "Les Pouces Verts (fictif)", city: "Lévis", priceCents: 3500, unit: "visite", desc: "Tonte, bordures et ramassage. Terrain résidentiel jusqu'à 500 m².", conditions: "Saison de mai à octobre. Reportée en cas de pluie.", cancel: "Annulation gratuite la veille avant 18 h." },
+  { id: 6, type: "service", cat: "formation", title: "Initiation à Excel pour travailleurs autonomes", provider: "Formation Cap-Rouge (fictif)", city: "En ligne", priceCents: 12000, unit: "séance de 2 h", desc: "Budget, factures et suivi de clients dans un tableur. Exercices fournis.", conditions: "Groupe de 6 personnes maximum.", cancel: "Remboursement complet jusqu'à 72 h avant la séance." },
+  { id: 7, type: "app", cat: "logiciels", title: "Gestionnaire de rendez-vous pour salons", provider: "Logiciels Boréal (fictif)", city: "En ligne", priceCents: 1900, unit: "mois", desc: "Prise de rendez-vous en ligne, rappels par courriel et agenda partagé pour 3 employés.", conditions: "Accès pendant la période payée. Licence fournie par l'éditeur, non transférable.", cancel: "Résiliable à tout moment. L'accès se termine à la fin du mois payé." },
+  { id: 8, type: "app", cat: "logiciels", title: "Modèles de soumissions et factures", provider: "Gabarits Pro (fictif)", city: "En ligne", priceCents: 2900, unit: "achat unique", desc: "15 modèles conformes à la présentation de la TPS et de la TVQ, en format tableur.", conditions: "Usage par une seule entreprise.", cancel: "Remboursable 14 jours si les fichiers n'ont pas été téléchargés." },
+  { id: 9, type: "service", cat: "admin", title: "Tenue de livres mensuelle", provider: "Comptabilité Rive-Sud (fictif)", city: "Longueuil", priceCents: 15000, unit: "mois", desc: "Saisie des opérations, rapprochement bancaire et rapport mensuel simple.", conditions: "Jusqu'à 80 opérations par mois.", cancel: "Préavis de 30 jours." },
+];
+
+const ACCOUNTS = [
+  { id: "chq", name: "Compte courant", openingCents: 245000 },
+  { id: "epa", name: "Compte d'épargne", openingCents: 800000 },
+  { id: "cc", name: "Carte de crédit", openingCents: -62000 },
+];
+const FIN_CATS = [
+  ["logement", "Logement"], ["electricite", "Électricité et chauffage"], ["epicerie", "Épicerie"],
+  ["restaurants", "Restaurants"], ["transport", "Transport"], ["abonnements", "Abonnements"],
+  ["salaire", "Salaire"], ["autonome", "Revenus autonomes"],
+];
+const catName = (id) => (FIN_CATS.find(([k]) => k === id) || [, "—"])[1];
+const accName = (id) => (ACCOUNTS.find((a) => a.id === id) || { name: "—" }).name;
+
+let txSeq = 100;
+const TXS = [
+  // Mois précédent (pour la comparaison)
+  { id: 1, kind: "income", date: d(PREV, 2), label: "Paie", categoryId: "salaire", accountId: "chq", amountCents: 215000, status: "completed" },
+  { id: 2, kind: "income", date: d(PREV, 16), label: "Paie", categoryId: "salaire", accountId: "chq", amountCents: 215000, status: "completed" },
+  { id: 3, kind: "expense", date: d(PREV, 1), label: "Loyer", categoryId: "logement", accountId: "chq", amountCents: 115000, status: "completed" },
+  { id: 4, kind: "expense", date: d(PREV, 10), label: "Épicerie du mois", categoryId: "epicerie", accountId: "cc", amountCents: 48000, status: "completed" },
+  { id: 5, kind: "expense", date: d(PREV, 20), label: "Restaurants", categoryId: "restaurants", accountId: "cc", amountCents: 35000, status: "completed" },
+  // Mois courant
+  { id: 10, kind: "expense", date: d(CUR, 1), label: "Loyer", categoryId: "logement", accountId: "chq", amountCents: 115000, status: "completed" },
+  { id: 11, kind: "income", date: d(CUR, 2), label: "Paie", categoryId: "salaire", accountId: "chq", amountCents: 215000, status: "completed" },
+  { id: 12, kind: "transfer", date: d(CUR, 3), label: "Épargne automatique", accountId: "chq", toAccountId: "epa", amountCents: 30000, status: "completed" },
+  { id: 13, kind: "expense", date: d(CUR, 4), label: "Épicerie Metro", categoryId: "epicerie", accountId: "cc", amountCents: 14237, status: "completed" },
+  { id: 14, kind: "expense", date: d(CUR, 9), label: "Hydro-Québec", categoryId: "electricite", accountId: "chq", amountCents: 8840, status: "completed" },
+  { id: 15, kind: "expense", date: d(CUR, 11), label: "Épicerie IGA", categoryId: "epicerie", accountId: "cc", amountCents: 9618, status: "completed" },
+  { id: 16, kind: "expense", date: d(CUR, 12), label: "Souper au resto", categoryId: "restaurants", accountId: "cc", amountCents: 5475, status: "completed" },
+  { id: 17, kind: "expense", date: d(CUR, 13), label: "Commande annulée", categoryId: "restaurants", accountId: "cc", amountCents: 4000, status: "cancelled" },
+  { id: 18, kind: "expense", date: d(CUR, 14), label: "Essence", categoryId: "transport", accountId: "cc", amountCents: 6120, status: "completed" },
+  { id: 19, kind: "expense", date: d(CUR, 15), label: "Abonnement musique", categoryId: "abonnements", accountId: "cc", amountCents: 1799, status: "completed" },
+  { id: 20, kind: "income", date: d(CUR, 16), label: "Paie", categoryId: "salaire", accountId: "chq", amountCents: 215000, status: "completed" },
+  { id: 21, kind: "expense", date: d(CUR, 18), label: "Épicerie Maxi", categoryId: "epicerie", accountId: "cc", amountCents: 12890, status: "completed" },
+  { id: 22, kind: "transfer", date: d(CUR, 20), label: "Paiement de la carte", accountId: "chq", toAccountId: "cc", amountCents: 40000, status: "completed" },
+  { id: 23, kind: "income", date: d(CUR, 28), label: "Contrat de graphisme", categoryId: "autonome", accountId: "chq", amountCents: 60000, status: "planned" },
+];
+const BUDGETS = [
+  { categoryId: "logement", amountCents: 115000 },
+  { categoryId: "epicerie", amountCents: 45000 },
+  { categoryId: "restaurants", amountCents: 12000 },
+  { categoryId: "transport", amountCents: 20000 },
+  { categoryId: "electricite", amountCents: 10000 },
+  { categoryId: "abonnements", amountCents: 4000 },
+];
+const ASSETS = [{ name: "Automobile (estimation personnelle du " + fmtDate(d(PREV, 1)) + ")", valueCents: 1450000 }];
+const LIABILITIES = [{ name: "Prêt auto", balanceCents: 980000 }];
+
+// ---------- Navigation ----------
+const VIEWS = ["marketplace", "finances", "organisation"];
+function showView(name) {
+  if (!VIEWS.includes(name)) name = "marketplace";
+  for (const v of VIEWS) document.getElementById("view-" + v).hidden = v !== name;
+  document.querySelectorAll("nav.tabs a").forEach((a) => {
+    if (a.dataset.view === name) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+  });
+}
+window.addEventListener("hashchange", () => { showView(location.hash.slice(1)); window.scrollTo(0, 0); });
+
+// ---------- Module A : catalogue ----------
+const elQ = document.getElementById("q"), elCat = document.getElementById("cat"), elType = document.getElementById("type");
+elCat.innerHTML = '<option value="">Toutes les catégories</option>' + CATEGORIES_MK.map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join("");
+const catLabel = (k) => (CATEGORIES_MK.find(([c]) => c === k) || [, ""])[1];
+const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+function renderOffers() {
+  const q = norm(elQ.value.trim());
+  const list = OFFERS.filter((o) =>
+    (!elCat.value || o.cat === elCat.value) &&
+    (!elType.value || o.type === elType.value) &&
+    (!q || norm(`${o.title} ${o.desc} ${o.provider} ${o.city} ${catLabel(o.cat)}`).includes(q)));
+  document.getElementById("count").textContent = `${list.length} offre${list.length > 1 ? "s" : ""} sur ${OFFERS.length}`;
+  const box = document.getElementById("offers");
+  if (!list.length) {
+    box.innerHTML = '<div class="panel empty" style="grid-column:1/-1"><h3>Aucune offre ne correspond</h3><p class="muted">Essayez un autre mot-clé ou effacez les filtres.</p></div>';
+    return;
+  }
+  box.innerHTML = list.map((o) => `
+    <button type="button" class="offer" data-id="${o.id}">
+      <span class="offer-top"><span class="chip ${o.type === "app" ? "accent" : ""}">${o.type === "app" ? "Application" : "Service"}</span><span class="small muted">${esc(o.city)}</span></span>
+      <h3>${esc(o.title)}</h3>
+      <span class="small muted">${esc(catLabel(o.cat))}</span>
+      <span class="price num">${fmtCents(o.priceCents)} <span class="muted small">/ ${esc(o.unit)}</span></span>
+      <span class="small muted">${esc(o.provider)}</span>
+    </button>`).join("");
+}
+[elQ, elCat, elType].forEach((el) => el.addEventListener("input", renderOffers));
+document.getElementById("reset").addEventListener("click", () => { elQ.value = ""; elCat.value = ""; elType.value = ""; renderOffers(); elQ.focus(); });
+document.getElementById("offers").addEventListener("click", (e) => {
+  const b = e.target.closest(".offer");
+  if (b) openOffer(Number(b.dataset.id));
+});
+
+function openOffer(id) {
+  const o = OFFERS.find((x) => x.id === id);
+  const box = document.getElementById("offer-detail");
+  box.innerHTML = `
+    <div class="view" style="gap:16px">
+      <div><button type="button" class="btn secondary" id="back">← Retour au catalogue</button></div>
+      <div class="detail">
+        <div class="panel" style="display:grid;gap:14px">
+          <span><span class="chip ${o.type === "app" ? "accent" : ""}">${o.type === "app" ? "Application numérique" : "Service"}</span> <span class="chip">Offre fictive</span></span>
+          <h1 id="offer-title" tabindex="-1">${esc(o.title)}</h1>
+          <p>${esc(o.desc)}</p>
+          <dl>
+            <dt>Catégorie</dt><dd>${esc(catLabel(o.cat))}</dd>
+            <dt>Fournisseur</dt><dd>${esc(o.provider)}</dd>
+            <dt>Lieu</dt><dd>${esc(o.city)}</dd>
+            <dt>Conditions</dt><dd>${esc(o.conditions)}</dd>
+            <dt>Annulation</dt><dd>${esc(o.cancel)}</dd>
+          </dl>
+        </div>
+        <aside class="panel" style="display:grid;gap:12px">
+          <p class="kpi"><span class="muted small">Prix</span><span class="value num">${fmtCents(o.priceCents)}</span><span class="muted small">par ${esc(o.unit)}, taxes en sus</span></p>
+          <button type="button" class="btn" id="book">${o.type === "app" ? "Obtenir l'accès" : "Demander une réservation"}</button>
+          <p class="notice small" id="book-msg" hidden>Indisponible dans le prototype. Les demandes de réservation arrivent avec la marketplace réelle (comptes et base de données). Aucun paiement ne sera pris avant validation complète.</p>
+        </aside>
+      </div>
+    </div>`;
+  document.getElementById("catalogue").hidden = true;
+  document.getElementById("filters").hidden = true;
+  box.hidden = false;
+  document.getElementById("offer-title").focus();
+  document.getElementById("back").addEventListener("click", closeOffer);
+  document.getElementById("book").addEventListener("click", () => { document.getElementById("book-msg").hidden = false; });
+}
+function closeOffer() {
+  document.getElementById("offer-detail").hidden = true;
+  document.getElementById("catalogue").hidden = false;
+  document.getElementById("filters").hidden = false;
+  elQ.focus();
+}
+
+// ---------- Module B : finances ----------
+const monthName = new Intl.DateTimeFormat("fr-CA", { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(CUR + "-15T12:00:00Z"));
+document.getElementById("fin-month").textContent = monthName;
+
+function deltaHtml(cur, prev, higherIsGood) {
+  const diff = cur - prev;
+  if (diff === 0) return '<span class="delta muted">Identique au mois précédent</span>';
+  const good = higherIsGood ? diff > 0 : diff < 0;
+  return `<span class="delta ${good ? "in" : "muted"}">${diff > 0 ? "+" : "−"}${fmtCents(Math.abs(diff))} vs mois précédent</span>`;
+}
+
+function renderFinances() {
+  const cur = Finance.monthTotals(TXS, CUR);
+  const prev = Finance.monthTotals(TXS, PREV);
+  const planned = Finance.monthTotals(TXS, CUR, "planned");
+  const nw = Finance.netWorth(ACCOUNTS, TXS, ASSETS, LIABILITIES);
+
+  document.getElementById("kpis").innerHTML = `
+    <div class="panel kpi" data-kpi="income"><span class="muted small">Revenus reçus</span><span class="value num">${fmtCents(cur.income)}</span>${deltaHtml(cur.income, prev.income, true)}${planned.income ? `<span class="small muted">+ ${fmtCents(planned.income)} prévus</span>` : ""}</div>
+    <div class="panel kpi" data-kpi="expense"><span class="muted small">Dépenses réalisées</span><span class="value num">${fmtCents(cur.expense)}</span>${deltaHtml(cur.expense, prev.expense, false)}</div>
+    <div class="panel kpi" data-kpi="net"><span class="muted small">Revenus − dépenses</span><span class="value num ${cur.net >= 0 ? "in" : ""}">${fmtCents(cur.net)}</span>${deltaHtml(cur.net, prev.net, true)}</div>
+    <div class="panel kpi" data-kpi="networth"><span class="muted small">Patrimoine net</span><span class="value num">${fmtCents(nw.net)}</span><span class="delta muted">Actifs − passifs, voir le détail</span></div>`;
+
+  const spent = Finance.spentByCategory(TXS, CUR);
+  document.getElementById("budgets").innerHTML = BUDGETS.map((b) => {
+    const s = spent[b.categoryId] || 0;
+    const pct = Math.round((s / b.amountCents) * 100);
+    const cls = pct > 100 ? "over" : pct >= 80 ? "warn" : "";
+    const left = b.amountCents - s;
+    return `<div class="bar-row">
+      <div class="bar-label"><span>${esc(catName(b.categoryId))}</span><span class="num">${fmtCents(s)} / ${fmtCents(b.amountCents)}</span></div>
+      <div class="bar ${cls}" role="progressbar" aria-label="${esc(catName(b.categoryId))}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.min(pct, 100)}"><span style="width:${Math.min(pct, 100)}%"></span></div>
+      <span class="small ${pct > 100 ? "" : "muted"}" style="${pct > 100 ? "color:var(--bad);font-weight:700" : ""}">${pct} % utilisé · ${left >= 0 ? `reste ${fmtCents(left)}` : `dépassement de ${fmtCents(-left)}`}</span>
+    </div>`;
+  }).join("");
+
+  const accRows = ACCOUNTS.map((a) => ({ name: a.name, bal: Finance.accountBalance(a, TXS) }));
+  document.getElementById("networth").innerHTML = `
+    <ul class="list">
+      ${accRows.filter((r) => r.bal >= 0).map((r) => `<li><span>${esc(r.name)}</span><span class="num">${fmtCents(r.bal)}</span></li>`).join("")}
+      ${ASSETS.map((a) => `<li><span>${esc(a.name)}</span><span class="num">${fmtCents(a.valueCents)}</span></li>`).join("")}
+      <li><strong>Total des actifs</strong><strong class="num">${fmtCents(nw.assetTotal)}</strong></li>
+      ${accRows.filter((r) => r.bal < 0).map((r) => `<li><span>${esc(r.name)} (solde dû)</span><span class="num">${fmtCents(-r.bal)}</span></li>`).join("")}
+      ${LIABILITIES.map((l) => `<li><span>${esc(l.name)}</span><span class="num">${fmtCents(l.balanceCents)}</span></li>`).join("")}
+      <li><strong>Total des passifs</strong><strong class="num">${fmtCents(nw.liabilityTotal)}</strong></li>
+    </ul>
+    <div class="total-line"><span>Patrimoine net</span><span class="num" data-networth>${fmtCents(nw.net)}</span></div>`;
+
+  document.getElementById("accounts").innerHTML = accRows.map((r) => `<li><span>${esc(r.name)}</span><span class="num">${fmtCents(r.bal)}</span></li>`).join("");
+
+  const statusChip = { completed: '<span class="chip good">Réalisé</span>', planned: '<span class="chip warn">Prévu</span>', cancelled: '<span class="chip">Annulé</span>' };
+  const rows = TXS.filter((t) => monthKey(t.date) === CUR).sort((a, b) => b.date.localeCompare(a.date) || b.id - a.id);
+  document.getElementById("tx-body").innerHTML = rows.map((t) => {
+    const sign = t.kind === "income" ? "+" : t.kind === "expense" ? "−" : "";
+    const cat = t.kind === "transfer" ? `Transfert vers ${esc(accName(t.toAccountId))}` : esc(catName(t.categoryId));
+    return `<tr class="${t.status === "cancelled" ? "cancelled" : ""}">
+      <td>${fmtDate(t.date)}</td><td>${esc(t.label)}</td><td>${cat}</td><td>${esc(accName(t.accountId))}</td><td>${statusChip[t.status]}</td>
+      <td class="amount num ${t.kind === "income" ? "in" : ""}">${sign}${fmtCents(t.amountCents)}</td></tr>`;
+  }).join("");
+}
+
+// Formulaire d'ajout
+const txKind = document.getElementById("tx-kind");
+const optionsHtml = (pairs) => pairs.map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join("");
+const accountOptions = optionsHtml(ACCOUNTS.map((a) => [a.id, a.name]));
+document.getElementById("tx-account").innerHTML = accountOptions;
+document.getElementById("tx-to").innerHTML = accountOptions;
+document.getElementById("tx-to").value = "epa";
+document.getElementById("tx-date").value = TODAY;
+function syncCategoryOptions() {
+  const k = txKind.value;
+  const incomeCats = ["salaire", "autonome"];
+  const cats = FIN_CATS.filter(([id]) => (k === "income") === incomeCats.includes(id));
+  document.getElementById("tx-category").innerHTML = optionsHtml(cats);
+  document.getElementById("wrap-category").hidden = k === "transfer";
+  document.getElementById("wrap-to").hidden = k !== "transfer";
+}
+txKind.addEventListener("change", syncCategoryOptions);
+syncCategoryOptions();
+
+document.getElementById("tx-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const msg = document.getElementById("tx-msg");
+  const errs = { amount: "", date: "", label: "", to: "" };
+  const kind = txKind.value;
+  const amountCents = parseCents(document.getElementById("tx-amount").value);
+  const date = document.getElementById("tx-date").value;
+  const label = document.getElementById("tx-label").value.trim();
+  const accountId = document.getElementById("tx-account").value;
+  const toAccountId = document.getElementById("tx-to").value;
+  if (amountCents === null) errs.amount = "Entrez un montant positif, avec au plus 2 décimales (ex. : 42,50).";
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) errs.date = "Choisissez une date.";
+  if (!label) errs.label = "Ajoutez une courte description.";
+  if (kind === "transfer" && toAccountId === accountId) errs.to = "Choisissez un compte différent du compte de départ.";
+  for (const [k, v] of Object.entries(errs)) {
+    document.getElementById("err-" + k).textContent = v;
+    const input = document.getElementById(k === "to" ? "tx-to" : "tx-" + k);
+    if (v) input.setAttribute("aria-invalid", "true"); else input.removeAttribute("aria-invalid");
+  }
+  const firstErr = Object.entries(errs).find(([, v]) => v);
+  if (firstErr) {
+    msg.className = "status-msg err";
+    msg.textContent = "L'opération n'a pas été ajoutée. Corrigez les champs indiqués.";
+    document.getElementById(firstErr[0] === "to" ? "tx-to" : "tx-" + firstErr[0]).focus();
+    return;
+  }
+  const tx = { id: ++txSeq, kind, date, label, accountId, amountCents, status: document.getElementById("tx-status").value };
+  if (kind === "transfer") tx.toAccountId = toAccountId; else tx.categoryId = document.getElementById("tx-category").value;
+  TXS.push(tx);
+  renderFinances();
+  msg.className = "status-msg ok";
+  msg.textContent = monthKey(date) === CUR
+    ? "Opération ajoutée. Les totaux sont recalculés (en mémoire seulement)."
+    : "Opération ajoutée hors du mois affiché : elle compte dans les soldes de comptes, pas dans les totaux du mois.";
+  document.getElementById("tx-amount").value = "";
+  document.getElementById("tx-label").value = "";
+});
+
+// ---------- Module C : organisation ----------
+let taskSeq = 10;
+const TASKS = [
+  { id: 1, title: "Renouveler l'assurance habitation", due: addDays(TODAY, -2), prio: 1, done: false },
+  { id: 2, title: "Préparer la soumission pour le client Tremblay", due: addDays(TODAY, 1), prio: 1, done: false },
+  { id: 3, title: "Classer les reçus du mois", due: addDays(TODAY, 5), prio: 2, done: false },
+  { id: 4, title: "Réserver le changement de pneus", due: addDays(TODAY, 9), prio: 3, done: false },
+  { id: 5, title: "Payer la facture de cellulaire", due: addDays(TODAY, -4), prio: 2, done: true },
+];
+const EVENTS = [
+  { date: addDays(TODAY, 1), time: "09 h 30", title: "Appel avec un client potentiel" },
+  { date: addDays(TODAY, 3), time: "18 h 00", title: "Cours de formation en ligne" },
+  { date: addDays(TODAY, 6), time: "14 h 00", title: "Rendez-vous chez le dentiste" },
+  { date: addDays(TODAY, 11), time: "10 h 00", title: "Échéance : acompte provisionnel d'impôt (exemple)" },
+];
+let taskFilter = "todo";
+const prioLabel = { 1: ["Haute", "bad"], 2: ["Moyenne", "warn"], 3: ["Basse", ""] };
+
+function renderTasks() {
+  const isLate = (t) => !t.done && t.due && t.due < TODAY;
+  const list = TASKS.filter((t) =>
+    taskFilter === "all" ? true : taskFilter === "done" ? t.done : taskFilter === "late" ? isLate(t) : !t.done)
+    .sort((a, b) => (a.done - b.done) || (a.due || "9").localeCompare(b.due || "9") || a.prio - b.prio);
+  const box = document.getElementById("tasks");
+  if (!list.length) {
+    const txt = { todo: "Rien à faire. Bravo !", late: "Aucune tâche en retard.", done: "Aucune tâche terminée pour l'instant.", all: "Aucune tâche." }[taskFilter];
+    box.innerHTML = `<p class="muted empty">${txt}</p>`;
+    return;
+  }
+  box.innerHTML = list.map((t) => {
+    const [pl, pc] = prioLabel[t.prio];
+    return `<div class="task ${t.done ? "done" : ""}">
+      <input type="checkbox" id="task-${t.id}" data-id="${t.id}" ${t.done ? "checked" : ""}>
+      <label class="t-body" for="task-${t.id}" style="font-weight:400;font-size:1rem">
+        <span class="t-title">${esc(t.title)}</span>
+        <span class="small muted">${t.due ? "Échéance : " + fmtDate(t.due) : "Sans échéance"} ${isLate(t) ? '<span class="chip bad">En retard</span>' : ""} <span class="chip ${pc}">${pl}</span></span>
+      </label>
+      <button type="button" class="del" data-del="${t.id}" aria-label="Supprimer la tâche ${esc(t.title)}">Supprimer</button>
+    </div>`;
+  }).join("");
+}
+document.getElementById("tasks").addEventListener("change", (e) => {
+  const t = TASKS.find((x) => x.id === Number(e.target.dataset.id));
+  if (t) { t.done = e.target.checked; renderTasks(); }
+});
+document.getElementById("tasks").addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-del]");
+  if (!btn) return;
+  if (btn.dataset.confirm !== "1") { btn.dataset.confirm = "1"; btn.textContent = "Confirmer ?"; btn.style.color = "var(--bad)"; return; }
+  const i = TASKS.findIndex((x) => x.id === Number(btn.dataset.del));
+  if (i >= 0) TASKS.splice(i, 1);
+  renderTasks();
+});
+document.getElementById("task-filter").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-f]");
+  if (!b) return;
+  taskFilter = b.dataset.f;
+  document.querySelectorAll("#task-filter button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  renderTasks();
+});
+document.getElementById("task-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const title = document.getElementById("task-title").value.trim();
+  const err = document.getElementById("err-task");
+  if (!title) { err.textContent = "Donnez un titre à la tâche."; document.getElementById("task-title").focus(); return; }
+  err.textContent = "";
+  TASKS.push({ id: ++taskSeq, title, due: document.getElementById("task-due").value || null, prio: Number(document.getElementById("task-prio").value), done: false });
+  document.getElementById("task-title").value = "";
+  renderTasks();
+});
+document.getElementById("agenda").innerHTML = EVENTS.map((ev) =>
+  `<li><time datetime="${ev.date}">${fmtDate(ev.date)}, ${ev.time}</time><span style="flex:1">${esc(ev.title)}</span></li>`).join("");
+
+// ---------- Démarrage ----------
+renderOffers();
+renderFinances();
+renderTasks();
+showView(location.hash.slice(1));
+</script>
