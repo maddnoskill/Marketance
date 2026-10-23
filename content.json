@@ -1,10 +1,12 @@
 {
   "nom": "Cyberservice Québec",
-  "theme": "Arc-en-ciel",
+  "theme": "Marine",
   "photo": "",
-  "zone": "📍 Québec et Lévis · à domicile ou à distance",
+  "zone": "Québec et Lévis · à domicile ou à distance",
   "titre": "Votre téléphone ou votre ordinateur vous complique la vie ? On règle ça, avec patience.",
   "sous_titre": "Aide informatique simple et sans jargon pour les aînés et leurs familles. Vous payez seulement après la séance, si vous êtes satisfait.",
+  "crypto_titre": "Comprendre la crypto avant d'y mettre un sou",
+  "crypto_texte": "Bitcoin, Ethereum, portefeuilles, plateformes… On démêle tout ça ensemble, calmement, pour que vous preniez vos propres décisions en connaissance de cause et sans vous faire arnaquer.",
   "service1_titre": "Téléphone et tablette",
   "service1_texte": "Configuration, photos, applications, textos, appels vidéo avec la famille.",
   "service2_titre": "Ordinateur lent ou bloqué",
@@ -16,6 +18,7 @@
   "prix_domicile": "50 $",
   "prix_distance": "35 $",
   "prix_forfait": "60 $",
-  "note_paiement": "💳 Paiement par virement Interac ou comptant, après la séance.",
+  "prix_crypto": "75 $",
+  "note_paiement": "Paiement par virement Interac ou comptant, après la séance.",
   "telephone": ""
 }
