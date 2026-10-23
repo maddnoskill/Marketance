@@ -14,7 +14,7 @@ content:
         label: Couleurs du site
         type: select
         options:
-          values: [Arc-en-ciel, Océan, Coucher de soleil, Forêt]
+          values: [Marine, Ardoise, Émeraude, Bordeaux]
       - name: photo
         label: Photo principale (optionnelle)
         type: image
@@ -29,6 +29,12 @@ content:
         type: text
       - name: sous_titre
         label: Phrase sous le titre
+        type: text
+      - name: crypto_titre
+        label: Section crypto — titre
+        type: string
+      - name: crypto_texte
+        label: Section crypto — texte
         type: text
       - name: service1_titre
         label: Service 1 — titre
@@ -62,6 +68,9 @@ content:
         type: string
       - name: prix_forfait
         label: Prix forfait nouveau téléphone
+        type: string
+      - name: prix_crypto
+        label: Prix consultation crypto (par heure)
         type: string
       - name: note_paiement
         label: Note sur le paiement

@@ -3,199 +3,322 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cyberservice Québec — Aide informatique pour aînés</title>
-<meta name="description" content="Aide patiente pour téléphones, tablettes et ordinateurs, à domicile à Québec et Lévis, ou à distance. Paiement après la séance.">
-<meta name="theme-color" content="#4338ca">
+<title>Cyberservice Québec — Aide informatique et consultation crypto</title>
+<meta name="description" content="Aide informatique patiente à Québec et Lévis, à domicile ou à distance, et consultation pour comprendre les cryptomonnaies en sécurité. Paiement après la séance.">
+<meta name="theme-color" content="#0b1b33">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#14142b; --soft:#4b4b6b; --bg:#f7f6ff; --card:#ffffff; --line:#e6e3f7;
-    --indigo:#4338ca; --violet:#7c3aed; --pink:#ec4899; --orange:#f97316; --teal:#0d9488; --sky:#0284c7;
-    --grad:linear-gradient(120deg,#4338ca 0%,#7c3aed 45%,#ec4899 80%,#f97316 100%);
+    --ink:#0f172a; --soft:#475569; --muted:#64748b; --bg:#f8fafc; --card:#ffffff; --line:#e2e8f0;
+    --navy:#0b1b33; --navy2:#13294b; --accent:#2563eb; --accent-soft:#dbeafe; --gold:#d4a017;
+    --up:#15803d; --down:#b91c1c;
   }
   *{box-sizing:border-box}
-  html{font-size:19px;scroll-behavior:smooth}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6}
-  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+  html{font-size:18px;scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  [hidden]{display:none!important}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  svg.i{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
 
   /* En-tête */
-  header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  header .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:14px;padding-bottom:14px}
-  .logo{font-weight:800;font-size:1.2rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
-  .logo i{width:36px;height:36px;border-radius:10px;background:var(--grad);display:grid;place-items:center;color:#fff;font-style:normal;font-size:1.05rem}
-  .logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:12px;padding-bottom:12px}
+  .logo{font-weight:800;font-size:1.05rem;color:var(--navy);text-decoration:none;display:flex;align-items:center;gap:10px;min-width:0}
+  .logo b{width:34px;height:34px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:.85rem;letter-spacing:.02em;flex-shrink:0}
+  nav{display:flex;gap:26px}
+  nav a{color:var(--soft);text-decoration:none;font-weight:500;font-size:.92rem}
+  nav a:hover{color:var(--navy)}
+  .head-right{display:flex;align-items:center;gap:14px;flex-shrink:0}
+  .tel{font-weight:700;color:var(--navy);text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:6px}
 
-  .btn{display:inline-block;background:var(--ink);color:#fff;text-decoration:none;font-weight:700;padding:15px 28px;border-radius:999px;border:0;font:inherit;font-weight:700;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease}
-  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(67,56,202,.3)}
-  .btn.light{background:#fff;color:var(--indigo)}
-  .btn.outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.7)}
-  .btn.grad{background:var(--grad)}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;font:inherit;font-weight:600;font-size:.95rem;padding:13px 24px;border-radius:10px;border:0;cursor:pointer;transition:background .15s ease, transform .15s ease}
+  .btn:hover{background:#1d4ed8;transform:translateY(-1px)}
+  .btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35)}
+  .btn.ghost:hover{background:rgba(255,255,255,.08)}
+  .btn.sm{padding:10px 18px;font-size:.9rem}
 
   /* Bannière */
-  .hero{background:var(--grad);color:#fff;position:relative;overflow:hidden}
-  .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(10px);opacity:.35}
-  .hero::before{width:420px;height:420px;background:#fde047;top:-140px;right:-120px}
-  .hero::after{width:320px;height:320px;background:#22d3ee;bottom:-160px;left:-100px}
-  .hero .wrap{position:relative;padding-top:76px;padding-bottom:84px}
-  .pill{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);padding:6px 14px;border-radius:999px;font-weight:600;font-size:.9rem;margin-bottom:18px}
-  .hero h1{font-size:2.6rem;line-height:1.15;margin:0 0 18px;max-width:760px;letter-spacing:-.02em}
-  .hero p{font-size:1.15rem;max-width:620px;margin:0 0 30px;opacity:.95}
-  .actions{display:flex;gap:14px;flex-wrap:wrap}
-  .trust{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
-  .trust div{background:rgba(255,255,255,.16);border-radius:12px;padding:10px 16px;font-weight:600}
+  .hero{background:radial-gradient(1200px 500px at 85% -10%,#1e3a8a 0%,transparent 60%),var(--navy);color:#fff}
+  .hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding-top:72px;padding-bottom:80px}
+  .hero > .wrap > *{min-width:0}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;color:#93c5fd;font-weight:600;font-size:.85rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px}
+  .hero h1{font-size:2.6rem;line-height:1.15;margin:0 0 18px;letter-spacing:-.025em;font-weight:800}
+  .hero p.lead{font-size:1.1rem;color:#cbd5e1;margin:0 0 30px;max-width:580px}
+  .actions{display:flex;gap:12px;flex-wrap:wrap}
+  .trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:36px;color:#cbd5e1;font-size:.92rem}
+  .trust span{display:flex;align-items:center;gap:8px}
+  .trust svg{color:#4ade80;width:20px;height:20px}
+  .hero-photo{display:block;margin-top:32px;width:100%;max-width:480px;border-radius:14px;border:1px solid rgba(255,255,255,.15)}
 
-  section{padding:64px 0}
-  h2{font-size:1.9rem;margin:0 0 8px;letter-spacing:-.02em}
-  .sub{color:var(--soft);margin:0 0 30px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+  /* Panneau marché (bannière) */
+  .market{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:22px}
+  .market-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:14px;gap:4px 10px}
+  .market-head h2{font-size:1rem;margin:0;font-weight:700;color:#fff}
+  .live{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;color:#94a3b8}
+  .live::before{content:"";width:8px;height:8px;border-radius:50%;background:#94a3b8}
+  .live.on::before{background:#4ade80;box-shadow:0 0 0 4px rgba(74,222,128,.15)}
+  .mrow{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid rgba(255,255,255,.08);font-size:.95rem}
+  .mrow .sym{color:#94a3b8;font-size:.8rem;margin-left:6px}
+  .mrow .px{font-variant-numeric:tabular-nums;font-weight:600}
+  .chg{font-variant-numeric:tabular-nums;font-weight:600;font-size:.85rem;padding:3px 8px;border-radius:6px;min-width:70px;text-align:right}
+  .hero .chg.up{color:#4ade80;background:rgba(74,222,128,.1)} .hero .chg.down{color:#f87171;background:rgba(248,113,113,.1)}
+  .mood{margin-top:14px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,.06);font-size:.9rem;color:#e2e8f0}
+  .src{font-size:.75rem;color:#94a3b8;margin:12px 0 0}
+
+  section{padding:80px 0}
+  .kicker{color:var(--accent);font-weight:700;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 10px}
+  h2.title{font-size:2rem;margin:0 0 10px;letter-spacing:-.02em;line-height:1.2}
+  .sub{color:var(--soft);margin:0 0 36px;max-width:680px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+
+  /* Section crypto */
+  .crypto{background:#fff;border-bottom:1px solid var(--line)}
+  .coins{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:44px}
+  .coin{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--bg)}
+  .coin-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .coin-name{font-weight:700}
+  .coin-name small{color:var(--muted);font-weight:500;margin-left:4px}
+  .coin-px{font-size:1.45rem;font-weight:700;margin:6px 0 2px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .coin .chg.up{color:var(--up);background:#dcfce7} .coin .chg.down{color:var(--down);background:#fee2e2}
+  .coin-meta{display:flex;flex-wrap:wrap;column-gap:12px;justify-content:space-between;color:var(--muted);font-size:.8rem;font-variant-numeric:tabular-nums}
+  .spark{display:block;width:100%;height:44px;margin-top:10px}
+  .spark path{fill:none;stroke-width:2}
+  .market-note{color:var(--muted);font-size:.85rem;margin:-28px 0 44px}
+
+  .offer{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:stretch}
+  .offer > *{min-width:0}
+  .offer-main{border:1px solid var(--line);border-radius:16px;padding:32px;background:#fff}
+  .offer-main h3{font-size:1.4rem;margin:0 0 8px;letter-spacing:-.01em}
+  .offer-main > p{color:var(--soft);margin:0 0 20px}
+  .checks{list-style:none;padding:0;margin:0 0 26px;display:grid;gap:12px}
+  .checks li{display:flex;gap:12px;align-items:flex-start}
+  .checks svg{color:var(--accent);margin-top:2px;width:22px;height:22px}
+  .offer-price{display:flex;align-items:baseline;gap:8px;margin-bottom:20px}
+  .offer-price strong{font-size:2.2rem;letter-spacing:-.02em}
+  .offer-price span{color:var(--muted)}
+  .warn{background:#fffbeb;border:1px solid #fde68a;border-radius:16px;padding:28px;color:#78350f}
+  .warn h3{margin:0 0 12px;font-size:1.1rem;display:flex;gap:10px;align-items:center;color:#92400e}
+  .warn ul{margin:0;padding-left:20px;display:grid;gap:8px;font-size:.95rem}
+  .warn p{font-size:.85rem;margin:16px 0 0}
 
   /* Services */
-  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;transition:transform .2s ease, box-shadow .2s ease}
-  .card:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(20,20,43,.08)}
-  .icon{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-size:1.6rem;margin-bottom:14px}
-  .c1 .icon{background:#e0e7ff}.c2 .icon{background:#fce7f3}.c3 .icon{background:#ccfbf1}.c4 .icon{background:#ffedd5}
-  .card h3{margin:0 0 6px;font-size:1.15rem}
-  .card p{margin:0;color:var(--soft)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;transition:box-shadow .2s ease, border-color .2s ease}
+  .card:hover{border-color:#cbd5e1;box-shadow:0 12px 30px rgba(15,23,42,.06)}
+  .icon{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;margin-bottom:16px;background:var(--accent-soft);color:var(--accent)}
+  .card h3{margin:0 0 6px;font-size:1.08rem}
+  .card p{margin:0;color:var(--soft);font-size:.95rem}
 
   /* Tarifs */
   .prices{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .price-card{border-radius:22px;padding:28px;color:#fff;position:relative;overflow:hidden}
-  .p1{background:linear-gradient(135deg,#4338ca,#7c3aed)}
-  .p2{background:linear-gradient(135deg,#0284c7,#0d9488)}
-  .p3{background:linear-gradient(135deg,#ec4899,#f97316)}
-  .price-card h3{margin:0;font-size:1.1rem;opacity:.95}
-  .price{font-size:2.6rem;font-weight:800;margin:8px 0 4px;letter-spacing:-.02em}
-  .price small{font-size:1rem;font-weight:600;opacity:.9}
-  .price-card p{margin:0;opacity:.95}
-  .badge{position:absolute;top:16px;right:16px;background:#fff;color:#ec4899;font-weight:800;font-size:.75rem;padding:4px 10px;border-radius:999px}
-  .note{color:var(--soft);font-size:.95rem;margin-top:18px}
+  .price-card{border:1px solid var(--line);border-radius:14px;padding:28px;background:var(--bg);position:relative}
+  .price-card.feat{border:2px solid var(--accent);background:#fff}
+  .price-card h3{margin:0;font-size:1rem;color:var(--soft);font-weight:600}
+  .price{font-size:2.3rem;font-weight:800;margin:8px 0 6px;letter-spacing:-.02em;color:var(--navy)}
+  .price small{font-size:.95rem;font-weight:500;color:var(--muted)}
+  .price-card p{margin:0;color:var(--soft);font-size:.95rem}
+  .badge{position:absolute;top:-12px;left:24px;background:var(--accent);color:#fff;font-weight:700;font-size:.72rem;letter-spacing:.05em;padding:4px 10px;border-radius:6px}
+  .note{color:var(--soft);font-size:.92rem;margin-top:22px}
 
   /* Étapes */
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-  .step{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px}
-  .num{width:44px;height:44px;border-radius:50%;background:var(--grad);color:#fff;font-weight:800;display:grid;place-items:center;margin-bottom:12px}
-  .step p{margin:0;color:var(--soft)}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;counter-reset:s}
+  .step{border-top:2px solid var(--navy);padding-top:18px}
+  .step::before{counter-increment:s;content:"0" counter(s);font-weight:800;color:var(--accent);font-size:.9rem;letter-spacing:.05em}
+  .step h3{margin:6px 0 6px;font-size:1.08rem}
+  .step p{margin:0;color:var(--soft);font-size:.95rem}
 
   /* Formulaire */
-  .book{background:linear-gradient(180deg,var(--bg),#ede9fe)}
-  .book-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:28px;align-items:start}
+  .book{background:var(--bg)}
+  .book-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:28px;align-items:start}
   .book-grid > *{min-width:0}
-  input,select,textarea{width:100%;min-width:0}
-  .book-side{background:var(--ink);color:#fff;border-radius:22px;padding:30px}
-  .book-side h3{margin:0 0 12px;font-size:1.3rem}
-  .book-side ul{padding-left:20px;margin:0}
-  .book-side li{margin:6px 0}
-  form{background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;display:grid;gap:16px;box-shadow:0 20px 40px rgba(67,56,202,.08)}
-  label{font-weight:700;display:grid;gap:6px}
-  input,select,textarea{font:inherit;padding:13px 15px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
-  input:focus,select:focus,textarea:focus{outline:3px solid #c4b5fd;border-color:var(--violet)}
-  .small{font-size:.9rem;color:var(--soft);margin:0}
+  .book-side{background:var(--navy);color:#fff;border-radius:16px;padding:32px}
+  .book-side h3{margin:0 0 16px;font-size:1.2rem}
+  .book-side ul{list-style:none;padding:0;margin:0;display:grid;gap:12px;color:#cbd5e1}
+  .book-side li{display:flex;gap:10px}
+  .book-side svg{color:#4ade80;width:20px;height:20px;margin-top:3px}
+  form{background:#fff;border:1px solid var(--line);border-radius:16px;padding:30px;display:grid;gap:16px}
+  label{font-weight:600;font-size:.92rem;display:grid;gap:6px}
+  input,select,textarea{width:100%;min-width:0;font:inherit;font-weight:400;padding:12px 14px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:3px solid var(--accent-soft);border-color:var(--accent)}
+  .small{font-size:.85rem;color:var(--muted);margin:0}
 
-  .head-right{display:flex;align-items:center;gap:14px}
-  .tel{font-weight:800;color:var(--indigo);text-decoration:none;white-space:nowrap}
-  .hero-photo{display:block;margin-top:36px;width:100%;max-width:520px;border-radius:24px;box-shadow:0 24px 50px rgba(0,0,0,.25);border:4px solid rgba(255,255,255,.6)}
-  .hero-photo[hidden]{display:none}
+  footer{background:var(--navy);color:#94a3b8;padding:36px 0;font-size:.85rem}
+  footer .wrap{display:grid;gap:10px}
+  footer strong{color:#fff}
 
   /* Thèmes de couleurs (choisis dans l'éditeur) */
-  body.t-ocean{--indigo:#0369a1;--violet:#0891b2;--grad:linear-gradient(120deg,#1e3a8a 0%,#0369a1 40%,#0891b2 75%,#14b8a6 100%)}
-  body.t-soleil{--indigo:#c2410c;--violet:#db2777;--grad:linear-gradient(120deg,#9d174d 0%,#db2777 35%,#f97316 75%,#facc15 100%)}
-  body.t-foret{--indigo:#166534;--violet:#15803d;--grad:linear-gradient(120deg,#14532d 0%,#15803d 45%,#65a30d 80%,#ca8a04 100%)}
+  body.t-ardoise{--navy:#1e293b;--accent:#0f766e;--accent-soft:#ccfbf1}
+  body.t-emeraude{--navy:#052e2b;--accent:#059669;--accent-soft:#d1fae5}
+  body.t-bordeaux{--navy:#3b0d1a;--accent:#be123c;--accent-soft:#ffe4e6}
+  body.t-ardoise .hero,body.t-emeraude .hero,body.t-bordeaux .hero{background:var(--navy)}
 
-  footer{background:var(--ink);color:#c7c7e0;padding:32px 0;text-align:center;font-size:.9rem}
-
-  @media (max-width:760px){
-    html{font-size:18px}
-    .hero h1{font-size:1.9rem}
-    .book-grid{grid-template-columns:1fr}
-    header .btn{padding:11px 18px}
-    .logo{font-size:1.05rem;min-width:0}
-    .tel{font-size:1.4rem}
+  @media (max-width:900px){
+    nav{display:none}
+    .hero .wrap{grid-template-columns:1fr;gap:36px;padding-top:52px;padding-bottom:56px}
+    .offer,.book-grid{grid-template-columns:1fr}
+  }
+  @media (max-width:600px){
+    html{font-size:17px}
+    .hero h1{font-size:1.85rem}
+    h2.title{font-size:1.6rem}
+    section{padding:60px 0}
     .tel-num{display:none}
-    .head-right{gap:8px;flex-shrink:0}
+    header .btn{padding:9px 14px}
+    .offer-main,.warn,form,.book-side{padding:22px}
   }
 </style>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="i-call" viewBox="0 0 24 24"><path d="M5 3h4l2 5-3 2a12 12 0 0 0 6 6l2-3 5 2v4a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 6-7"/></symbol>
+</svg>
+
 <header>
   <div class="wrap">
-    <a class="logo" href="#"><i>✦</i><span data-c="nom">Cyberservice Québec</span></a>
-    <div class="head-right"><a class="tel" data-tel hidden></a><a class="btn grad" href="#reserver">Réserver</a></div>
+    <a class="logo" href="#"><b>CQ</b><span data-c="nom">Cyberservice Québec</span></a>
+    <nav aria-label="Navigation principale">
+      <a href="#crypto">Crypto</a>
+      <a href="#services">Services</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#reserver">Contact</a>
+    </nav>
+    <div class="head-right"><a class="tel" data-tel hidden></a><a class="btn sm" href="#reserver">Réserver</a></div>
   </div>
 </header>
 
 <main>
   <div class="hero">
     <div class="wrap">
-      <div class="pill" data-c="zone">📍 Québec et Lévis · à domicile ou à distance</div>
-      <h1 data-c="titre">Votre téléphone ou votre ordinateur vous complique la vie ? On règle ça, avec patience.</h1>
-      <p data-c="sous_titre">Aide informatique simple et sans jargon pour les aînés et leurs familles. Vous payez seulement après la séance, si vous êtes satisfait.</p>
-      <div class="actions">
-        <a class="btn light" href="#reserver">Réserver une séance</a>
-        <a class="btn outline" href="#tarifs">Voir les tarifs</a>
+      <div>
+        <div class="eyebrow" data-c="zone">Québec et Lévis · à domicile ou à distance</div>
+        <h1 data-c="titre">Votre téléphone ou votre ordinateur vous complique la vie ? On règle ça, avec patience.</h1>
+        <p class="lead" data-c="sous_titre">Aide informatique simple et sans jargon pour les aînés et leurs familles. Vous payez seulement après la séance, si vous êtes satisfait.</p>
+        <div class="actions">
+          <a class="btn" href="#crypto">Découvrir la consultation crypto</a>
+          <a class="btn ghost" href="#reserver">Réserver une séance</a>
+        </div>
+        <div class="trust">
+          <span><svg class="i"><use href="#i-check"/></svg>Paiement après la séance</span>
+          <span><svg class="i"><use href="#i-check"/></svg>Aucune vente forcée</span>
+          <span><svg class="i"><use href="#i-check"/></svg>Service local</span>
+        </div>
+        <img class="hero-photo" data-photo alt="" hidden>
       </div>
-      <div class="trust">
-        <div>✅ Paiement après la séance</div>
-        <div>🤝 Aucune vente forcée</div>
-        <div>🐢 On explique lentement</div>
-      </div>
-      <img class="hero-photo" data-photo alt="" hidden>
+
+      <aside class="market" aria-labelledby="market-title">
+        <div class="market-head">
+          <h2 id="market-title">Marché crypto en direct</h2>
+          <span class="live" data-live>Chargement…</span>
+        </div>
+        <div data-mini></div>
+        <div class="mood" data-mood hidden></div>
+        <p class="src">Cours en dollars canadiens, variation sur 24 h. Source : CoinGecko. À titre informatif seulement.</p>
+      </aside>
     </div>
   </div>
 
-  <section>
+  <section id="crypto" class="crypto">
     <div class="wrap">
-      <h2>Je peux vous aider avec…</h2>
+      <p class="kicker">Cryptomonnaies</p>
+      <h2 class="title" data-c="crypto_titre">Comprendre la crypto avant d'y mettre un sou</h2>
+      <p class="sub" data-c="crypto_texte">Bitcoin, Ethereum, portefeuilles, plateformes… On démêle tout ça ensemble, calmement, pour que vous preniez vos propres décisions en connaissance de cause et sans vous faire arnaquer.</p>
+
+      <div class="coins" data-coins aria-live="polite"></div>
+      <p class="market-note" data-note>Les cours se chargent depuis CoinGecko. S'ils n'apparaissent pas, réessayez dans une minute.</p>
+
+      <div class="offer">
+        <div class="offer-main">
+          <h3>Consultation crypto personnalisée</h3>
+          <p>Une séance d'une heure, à domicile ou à distance, adaptée à votre niveau.</p>
+          <ul class="checks">
+            <li><svg class="i"><use href="#i-check"/></svg><span>Les bases expliquées simplement : blockchain, Bitcoin, Ethereum, volatilité et risques.</span></li>
+            <li><svg class="i"><use href="#i-check"/></svg><span>Lire les tendances du marché et les graphiques sans se laisser emporter.</span></li>
+            <li><svg class="i"><use href="#i-check"/></svg><span>Choisir une plateforme inscrite auprès des autorités canadiennes et ouvrir un compte pas à pas.</span></li>
+            <li><svg class="i"><use href="#i-check"/></svg><span>Sécuriser son portefeuille : mots de passe, double authentification, phrase de récupération.</span></li>
+            <li><svg class="i"><use href="#i-check"/></svg><span>Reconnaître les arnaques crypto : faux conseillers, promesses de rendement, faux sites.</span></li>
+          </ul>
+          <div class="offer-price"><strong data-c="prix_crypto">75 $</strong><span>/ heure</span></div>
+          <a class="btn" href="#reserver" data-pick="Consultation crypto">Réserver une consultation crypto</a>
+        </div>
+        <div class="warn">
+          <h3><svg class="i"><use href="#i-alert"/></svg>Bon à savoir</h3>
+          <ul>
+            <li>Les cryptomonnaies sont très volatiles : leur valeur peut chuter fortement en quelques heures.</li>
+            <li>N'investissez jamais de l'argent dont vous avez besoin.</li>
+            <li>Personne de sérieux ne vous garantit un rendement. Méfiez-vous de quiconque le fait.</li>
+            <li>Ne donnez jamais votre phrase de récupération, à personne. Même pas à moi.</li>
+          </ul>
+          <p>Cette consultation est éducative. Elle ne constitue pas un conseil en placement personnalisé : vous restez seul maître de vos décisions. Pour vérifier qu'une plateforme ou un conseiller est autorisé, consultez le site de l'Autorité des marchés financiers (lautorite.qc.ca).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="wrap">
+      <p class="kicker">Aide informatique</p>
+      <h2 class="title">Je peux aussi vous aider avec…</h2>
       <p class="sub">Les petits et les gros tracas du quotidien.</p>
       <div class="grid">
-        <div class="card c1"><div class="icon">📱</div><h3 data-c="service1_titre">Téléphone et tablette</h3><p data-c="service1_texte">Configuration, photos, applications, textos, appels vidéo avec la famille.</p></div>
-        <div class="card c2"><div class="icon">💻</div><h3 data-c="service2_titre">Ordinateur lent ou bloqué</h3><p data-c="service2_texte">Nettoyage, mises à jour, imprimante, Wi-Fi, sauvegarde de vos fichiers.</p></div>
-        <div class="card c3"><div class="icon">🛡️</div><h3 data-c="service3_titre">Arnaques et sécurité</h3><p data-c="service3_texte">Reconnaître les faux courriels et appels, mots de passe sûrs, virus.</p></div>
-        <div class="card c4"><div class="icon">🎓</div><h3 data-c="service4_titre">Cours privé</h3><p data-c="service4_texte">Apprendre à votre rythme : courriel, Facebook, Zoom, services en ligne.</p></div>
+        <div class="card"><div class="icon"><svg class="i"><use href="#i-phone"/></svg></div><h3 data-c="service1_titre">Téléphone et tablette</h3><p data-c="service1_texte">Configuration, photos, applications, textos, appels vidéo avec la famille.</p></div>
+        <div class="card"><div class="icon"><svg class="i"><use href="#i-laptop"/></svg></div><h3 data-c="service2_titre">Ordinateur lent ou bloqué</h3><p data-c="service2_texte">Nettoyage, mises à jour, imprimante, Wi-Fi, sauvegarde de vos fichiers.</p></div>
+        <div class="card"><div class="icon"><svg class="i"><use href="#i-shield"/></svg></div><h3 data-c="service3_titre">Arnaques et sécurité</h3><p data-c="service3_texte">Reconnaître les faux courriels et appels, mots de passe sûrs, virus.</p></div>
+        <div class="card"><div class="icon"><svg class="i"><use href="#i-cap"/></svg></div><h3 data-c="service4_titre">Cours privé</h3><p data-c="service4_texte">Apprendre à votre rythme : courriel, Facebook, Zoom, services en ligne.</p></div>
       </div>
     </div>
   </section>
 
   <section id="tarifs" class="prices">
     <div class="wrap">
-      <h2>Tarifs clairs, sans surprise</h2>
+      <p class="kicker">Tarifs</p>
+      <h2 class="title">Des tarifs clairs, sans surprise</h2>
       <p class="sub">Le prix est annoncé avant la séance. Point.</p>
       <div class="grid">
-        <div class="price-card p1"><h3>À domicile</h3><div class="price"><span data-c="prix_domicile">50 $</span> <small>/ heure</small></div><p>Québec et Lévis. Déplacement inclus.</p></div>
-        <div class="price-card p2"><h3>À distance</h3><div class="price"><span data-c="prix_distance">35 $</span> <small>/ heure</small></div><p>Par téléphone ou partage d'écran.</p></div>
-        <div class="price-card p3"><span class="badge">POPULAIRE</span><h3>Nouveau téléphone prêt à utiliser</h3><div class="price"><span data-c="prix_forfait">60 $</span> <small>forfait</small></div><p>Contacts et photos transférés, réglages, petite formation.</p></div>
+        <div class="price-card"><h3>À domicile</h3><div class="price"><span data-c="prix_domicile">50 $</span> <small>/ heure</small></div><p>Québec et Lévis. Déplacement inclus.</p></div>
+        <div class="price-card"><h3>À distance</h3><div class="price"><span data-c="prix_distance">35 $</span> <small>/ heure</small></div><p>Par téléphone ou partage d'écran.</p></div>
+        <div class="price-card"><h3>Nouveau téléphone prêt à utiliser</h3><div class="price"><span data-c="prix_forfait">60 $</span> <small>forfait</small></div><p>Contacts et photos transférés, réglages, petite formation.</p></div>
+        <div class="price-card feat"><span class="badge">NOUVEAU</span><h3>Consultation crypto</h3><div class="price"><span data-c="prix_crypto">75 $</span> <small>/ heure</small></div><p>Comprendre, sécuriser, éviter les arnaques.</p></div>
       </div>
-      <p class="note" data-c="note_paiement">💳 Paiement par virement Interac ou comptant, après la séance.</p>
+      <p class="note" data-c="note_paiement">Paiement par virement Interac ou comptant, après la séance.</p>
     </div>
   </section>
 
   <section>
     <div class="wrap">
-      <h2>Comment ça marche</h2>
+      <p class="kicker">Déroulement</p>
+      <h2 class="title">Comment ça marche</h2>
       <p class="sub">Simple comme un coup de fil.</p>
       <div class="steps">
-        <div class="step"><div class="num">1</div><h3>Vous réservez</h3><p>Avec le formulaire ci-dessous, en 2 minutes.</p></div>
-        <div class="step"><div class="num">2</div><h3>Je vous rappelle</h3><p>Pour fixer la date et comprendre le problème.</p></div>
-        <div class="step"><div class="num">3</div><h3>On règle tout</h3><p>Et je vous montre comment faire la prochaine fois.</p></div>
-        <div class="step"><div class="num">4</div><h3>Vous payez après</h3><p>Seulement si vous êtes satisfait.</p></div>
+        <div class="step"><h3>Vous réservez</h3><p>Avec le formulaire ci-dessous, en 2 minutes.</p></div>
+        <div class="step"><h3>Je vous rappelle</h3><p>Pour fixer la date et comprendre votre besoin.</p></div>
+        <div class="step"><h3>On avance ensemble</h3><p>Et je vous montre comment faire la prochaine fois.</p></div>
+        <div class="step"><h3>Vous payez après</h3><p>Seulement si vous êtes satisfait.</p></div>
       </div>
     </div>
   </section>
 
   <section id="reserver" class="book">
     <div class="wrap">
-      <h2>Réserver une séance</h2>
+      <p class="kicker">Contact</p>
+      <h2 class="title">Réserver une séance</h2>
       <p class="sub">Je vous rappelle dans les 24 heures.</p>
       <div class="book-grid">
         <div class="book-side">
           <h3>Pourquoi me choisir ?</h3>
           <ul>
-            <li>Un humain patient, pas un centre d'appels</li>
-            <li>Des explications claires, sans jargon</li>
-            <li>Vous payez seulement après la séance</li>
-            <li>Service local à Québec et Lévis</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Un humain patient, pas un centre d'appels</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Des explications claires, sans jargon</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Vous payez seulement après la séance</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Service local à Québec et Lévis</li>
           </ul>
         </div>
         <form action="https://formsubmit.co/theauthentiqueone@gmail.com" method="POST">
@@ -209,10 +332,10 @@
             <select name="ville"><option>Québec</option><option>Lévis</option><option>Autre (à distance)</option></select>
           </label>
           <label>Type de séance
-            <select name="seance"><option>À domicile</option><option>À distance</option><option>Forfait nouveau téléphone</option></select>
+            <select name="seance" data-seance><option>À domicile</option><option>À distance</option><option>Forfait nouveau téléphone</option><option>Consultation crypto</option></select>
           </label>
-          <label>Décrivez le problème en quelques mots<textarea name="probleme" rows="4" required></textarea></label>
-          <button class="btn grad" type="submit">Envoyer ma demande</button>
+          <label>Décrivez votre besoin en quelques mots<textarea name="probleme" rows="4" required></textarea></label>
+          <button class="btn" type="submit">Envoyer ma demande</button>
           <p class="small">Vos informations servent uniquement à vous rappeler.</p>
         </form>
       </div>
@@ -221,7 +344,10 @@
 </main>
 
 <footer>
-  <div class="wrap">© 2026 <span data-c="nom">Cyberservice Québec</span> · Québec et Lévis</div>
+  <div class="wrap">
+    <div>© 2026 <strong data-c="nom">Cyberservice Québec</strong> · Québec et Lévis</div>
+    <div>Les informations sur les cryptomonnaies sont fournies à titre éducatif et ne constituent pas un conseil financier. Cours fournis par CoinGecko.</div>
+  </div>
 </footer>
 
 <script>
@@ -230,20 +356,90 @@
 (function(){
   var next = document.querySelector('[data-next]');
   if (next) next.value = location.origin + '/merci.html';
+  document.querySelectorAll('[data-pick]').forEach(function(a){
+    a.addEventListener('click', function(){ var s = document.querySelector('[data-seance]'); if (s) s.value = a.getAttribute('data-pick'); });
+  });
   fetch('/content.json', {cache:'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(c){
     if (!c) return;
     document.querySelectorAll('[data-c]').forEach(function(el){
       var v = c[el.getAttribute('data-c')];
       if (typeof v === 'string' && v.trim()) el.textContent = v;
     });
-    if (c.nom) document.title = c.nom + ' — Aide informatique pour aînés';
-    var themes = {'Océan':'t-ocean','Coucher de soleil':'t-soleil','Forêt':'t-foret'};
+    if (c.nom) document.title = c.nom + ' — Aide informatique et consultation crypto';
+    var themes = {'Ardoise':'t-ardoise','Émeraude':'t-emeraude','Bordeaux':'t-bordeaux'};
     if (themes[c.theme]) document.body.classList.add(themes[c.theme]);
     var img = document.querySelector('[data-photo]');
     if (c.photo && img){ img.src = c.photo; img.hidden = false; }
     var tel = document.querySelector('[data-tel]');
-    if (c.telephone && tel){ tel.innerHTML = '📞 <span class="tel-num"></span>'; tel.querySelector('.tel-num').textContent = c.telephone; tel.href = 'tel:' + c.telephone.replace(/[^0-9+]/g,''); tel.hidden = false; }
+    if (c.telephone && tel){ tel.innerHTML = '<svg class="i"><use href="#i-call"/></svg><span class="tel-num"></span>'; tel.querySelector('.tel-num').textContent = c.telephone; tel.href = 'tel:' + c.telephone.replace(/[^0-9+]/g,''); tel.hidden = false; }
   }).catch(function(){});
+})();
+
+/* Cours crypto en direct (API publique CoinGecko, sans clé), rafraîchis chaque minute. */
+(function(){
+  var COINS = ['bitcoin','ethereum','solana','ripple'];
+  var URL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad&ids=' + COINS.join(',') +
+            '&sparkline=true&price_change_percentage=24h,7d';
+  var cad = function(n){ return n.toLocaleString('fr-CA',{style:'currency',currency:'CAD',maximumFractionDigits: n < 10 ? 4 : 2}); };
+  var pct = function(n){ return (n > 0 ? '+' : '') + n.toLocaleString('fr-CA',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' %'; };
+  var big = function(n){ return n >= 1e12 ? (n/1e12).toLocaleString('fr-CA',{maximumFractionDigits:2}) + ' billion $' : (n/1e9).toLocaleString('fr-CA',{maximumFractionDigits:1}) + ' G$'; };
+  var el = function(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  var chg = function(n){ var s = el('span', 'chg ' + (n >= 0 ? 'up' : 'down'), pct(n)); return s; };
+
+  function spark(points, up){
+    var w = 200, h = 44, min = Math.min.apply(null, points), max = Math.max.apply(null, points), r = (max - min) || 1;
+    var d = points.map(function(p, i){ return (i ? 'L' : 'M') + (i * w / (points.length - 1)).toFixed(1) + ' ' + (h - 2 - (p - min) / r * (h - 4)).toFixed(1); }).join('');
+    var ns = 'http://www.w3.org/2000/svg', svg = document.createElementNS(ns, 'svg'), path = document.createElementNS(ns, 'path');
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h); svg.setAttribute('preserveAspectRatio', 'none'); svg.setAttribute('class', 'spark');
+    svg.setAttribute('role', 'img'); svg.setAttribute('aria-label', 'Évolution sur 7 jours');
+    path.setAttribute('d', d); path.setAttribute('stroke', up ? '#15803d' : '#b91c1c'); path.setAttribute('vector-effect', 'non-scaling-stroke');
+    svg.appendChild(path); return svg;
+  }
+
+  function render(list){
+    var mini = document.querySelector('[data-mini]'), coins = document.querySelector('[data-coins]');
+    mini.textContent = ''; coins.textContent = '';
+    list.forEach(function(c){
+      var d24 = c.price_change_percentage_24h || 0, d7 = c.price_change_percentage_7d_in_currency || 0;
+      var row = el('div', 'mrow'), name = el('div', null, c.name);
+      name.appendChild(el('span', 'sym', c.symbol.toUpperCase()));
+      row.appendChild(name); row.appendChild(el('div', 'px', cad(c.current_price))); row.appendChild(chg(d24));
+      mini.appendChild(row);
+
+      var card = el('article', 'coin'), top = el('div', 'coin-top'), nm = el('div', 'coin-name', c.name);
+      nm.appendChild(el('small', null, c.symbol.toUpperCase()));
+      top.appendChild(nm); top.appendChild(chg(d24));
+      card.appendChild(top);
+      card.appendChild(el('div', 'coin-px', cad(c.current_price)));
+      var meta = el('div', 'coin-meta'); meta.appendChild(el('span', null, '7 jours : ' + pct(d7))); meta.appendChild(el('span', null, 'Cap. ' + big(c.market_cap)));
+      card.appendChild(meta);
+      var pts = c.sparkline_in_7d && c.sparkline_in_7d.price;
+      if (pts && pts.length > 1) card.appendChild(spark(pts, d7 >= 0));
+      coins.appendChild(card);
+    });
+    var avg = list.reduce(function(s, c){ return s + (c.price_change_percentage_24h || 0); }, 0) / list.length;
+    var mood = document.querySelector('[data-mood]');
+    mood.textContent = 'Tendance des dernières 24 h : ' + (avg > 1 ? 'marché en hausse' : avg < -1 ? 'marché en baisse' : 'marché plutôt stable') + ' (' + pct(avg) + ' en moyenne).';
+    mood.hidden = false;
+    var live = document.querySelector('[data-live]');
+    live.textContent = 'En direct, ' + new Date().toLocaleTimeString('fr-CA', {hour:'2-digit', minute:'2-digit', timeZone:'America/Toronto'});
+    live.classList.add('on');
+    var note = document.querySelector('[data-note]');
+    note.textContent = 'Cours en dollars canadiens mis à jour chaque minute. Courbe : 7 derniers jours. Source : CoinGecko. Les performances passées ne garantissent pas les résultats futurs.';
+  }
+
+  function load(){
+    fetch(URL).then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); }).then(function(list){
+      if (!Array.isArray(list) || !list.length) throw new Error('vide');
+      list.sort(function(a, b){ return COINS.indexOf(a.id) - COINS.indexOf(b.id); });
+      render(list);
+    }).catch(function(){
+      var live = document.querySelector('[data-live]');
+      if (!live.classList.contains('on')) live.textContent = 'Cours indisponibles pour le moment';
+    });
+  }
+  load();
+  setInterval(function(){ if (!document.hidden) load(); }, 60000);
 })();
 </script>
 </body>
