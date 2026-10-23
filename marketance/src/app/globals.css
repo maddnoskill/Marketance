@@ -1,27 +1,39 @@
 @import "tailwindcss";
 
-/* Palette Marketance : vert épinette sur fond neutre légèrement vert (voir prototype de phase 1). */
+/* Palette Marketance : bleu nuit et or sur fond crème. */
 :root {
-  --bg: #f3f6f5;
+  --bg: #f7f5ef;
   --surface: #ffffff;
-  --ink: #14211d;
-  --muted: #55665f;
-  --line: #d3dcd8;
-  --accent: #0d6655;
+  --ink: #161d33;
+  --muted: #5a6075;
+  --line: #e4dfd2;
+  --accent: #1e2a4a;
   --accent-ink: #ffffff;
-  --accent-soft: #d6ece6;
+  --accent-soft: #e8ebf3;
+  --gold: #c9a227;
+  --gold-ink: #1e2a4a;
+  --gold-text: #8a6d0f;
+  --gold-soft: #f6eccb;
+  --hero-from: #1e2a4a;
+  --hero-to: #2f3f6b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0f1614;
-    --surface: #17211e;
-    --ink: #e6efec;
-    --muted: #9db0a9;
-    --line: #2d3c37;
-    --accent: #5cc4ad;
-    --accent-ink: #062a22;
-    --accent-soft: #173b33;
+    --bg: #0b1122;
+    --surface: #141c33;
+    --ink: #eef0f6;
+    --muted: #a3aac0;
+    --line: #26304d;
+    --accent: #c9d3f0;
+    --accent-ink: #0b1122;
+    --accent-soft: #1d2745;
+    --gold: #e0be4a;
+    --gold-ink: #161d33;
+    --gold-text: #e0be4a;
+    --gold-soft: #3a3218;
+    --hero-from: #141c33;
+    --hero-to: #24305a;
     color-scheme: dark;
   }
 }
@@ -35,8 +47,18 @@
   --color-accent: var(--accent);
   --color-accent-ink: var(--accent-ink);
   --color-accent-soft: var(--accent-soft);
+  --color-gold: var(--gold);
+  --color-gold-ink: var(--gold-ink);
+  --color-gold-text: var(--gold-text);
+  --color-gold-soft: var(--gold-soft);
+  --color-hero-from: var(--hero-from);
+  --color-hero-to: var(--hero-to);
   --font-sans: var(--font-body), system-ui, sans-serif;
   --font-display: var(--font-display), system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -45,11 +67,14 @@ body {
 }
 
 :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--gold);
   outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;

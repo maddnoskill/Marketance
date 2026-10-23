@@ -1,5 +1,10 @@
 # Journal des changements
 
+## Non publié
+
+- Nouvelle apparence : palette bleu nuit et or sur fond crème (clair et sombre).
+- Accueil : barre de navigation fixe avec logo, grande bannière avec boutons d'action, cartes de modules avec icônes, pied de page.
+
 ## 0.1.0 — 20 octobre 2026
 
 - Plan de phase 0 et prototype cliquable de phase 1.
